@@ -44,6 +44,42 @@ function App() {
         e.preventDefault();
     }
 
+    const handleIngredient = (e, i) => {
+        const ingredientsClose = [...form.ingredients]
+
+        ingredientsClose[i] = e.target.value;
+
+        setForm({
+            ...form,
+            ingredients: ingredientsClose
+        })
+    }
+
+    const handleStep = (e, i) => {
+        const stepsClose = [...form.steps]
+
+        stepsClose[i] = e.target.value;
+
+        setForm({
+            ...form,
+            steps: stepsClose
+        })
+    }
+
+    const handleIngredientCount = () => {
+        setForm({
+            ...form,
+            ingredients: [...form.ingredients, ""]
+        })
+    }
+
+    const handleStepCount = () => {
+        setForm({
+            ...form,
+            steps: [...form.steps, ""]
+        })
+    }
+
     return (
         <div className="App">
             <h1>Moje przepisy</h1>
@@ -81,15 +117,57 @@ function App() {
                         <form onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <label>Title</label>
-                                <input type="text" value={form.title} onChange={(e) => setForm({...form, title: e.target.value})} />
+                                <input 
+                                    type="text" 
+                                    value={form.title} 
+                                    onChange={(e) => setForm({...form, title: e.target.value})} 
+                                />
                             </div>
                             <div className="form-group">
                                 <label>Description</label>
-                                <textarea type="text" value={form.desc} onChange={(e) => setForm({...form, desc: e.target.value})} />
+                                <textarea 
+                                    type="text" 
+                                    value={form.desc} 
+                                    onChange={(e) => setForm({...form, desc: e.target.value})} 
+                                />
                             </div>
                             <div className="form-group">
-                                <label>Description</label>
-                                <textarea type="text" value={form.desc} onChange={(e) => setForm({...form, desc: e.target.value})} />
+                                <label>Ingredients</label>
+                                {
+                                    form.ingredients.map((ingredient, i) => (
+                                        <input 
+                                            type="text" 
+                                            key={i}
+                                            value={ingredient} 
+                                            onChange={(e) => handleIngredient(e, i) } 
+                                        />
+                                    ))
+                                }
+                                <button type='button' onClick={handleIngredientCount}>Add ingredient</button>
+                            </div>
+                            <div className="form-group">
+                                <label>Steps</label>
+                                {
+                                    form.steps.map((step, i) => (
+                                        <textarea 
+                                            type="text" 
+                                            key={i}
+                                            value={step} 
+                                            onChange={(e) => handleStep(e, i) } 
+                                        />
+                                    ))
+                                }
+                                <button type='button' onClick={handleStepCount}>Add step</button>
+                            </div>
+                            <div className="buttons">
+                                <button type='submit'>Submit</button>
+                                <button 
+                                    type='button' 
+                                    className='remove' 
+                                    onClick={() => setPopupActive(false)}
+                                >
+                                    Close
+                                </button>
                             </div>
                         </form>
                     </div>

@@ -1,6 +1,7 @@
 import { db } from './firebase.config';
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot, doc, addDoc, deleteDoc } from 'firebase/firestore'; 
+import Popup from './components/Popup';
 
 function App() {
     const [recipes, setRecipies] = useState([]);
@@ -110,7 +111,7 @@ function App() {
             <h1>Moje przepisy</h1>
             <button onClick={() => setPopupActive(!popupActive)}>Add recipe</button>
             <div className='recipes'>
-                {recipes.map((recipe, index) => (
+                {recipes.map((recipe) => (
                     <div className='recipe' key={recipe.id}>
                         <h3>{recipe.title}</h3>
                         <p dangerouslySetInnerHTML={{ __html: recipe.desc}}></p>
@@ -135,69 +136,17 @@ function App() {
                     </div>
                 ))}
             </div>
-            {popupActive && 
-                <div className='popup'>
-                    <div className="popup-inner">
-                        <h2>Add a new recipe</h2>
-                        <form onSubmit={handleSubmit}>
-                            <div className="form-group">
-                                <label>Title</label>
-                                <input 
-                                    type="text" 
-                                    value={form.title} 
-                                    onChange={(e) => setForm({...form, title: e.target.value})} 
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Description</label>
-                                <textarea 
-                                    type="text" 
-                                    value={form.desc} 
-                                    onChange={(e) => setForm({...form, desc: e.target.value})} 
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Ingredients</label>
-                                {
-                                    form.ingredients.map((ingredient, i) => (
-                                        <input 
-                                            type="text" 
-                                            key={i}
-                                            value={ingredient} 
-                                            onChange={(e) => handleIngredient(e, i) } 
-                                        />
-                                    ))
-                                }
-                                <button type='button' onClick={handleIngredientCount}>Add ingredient</button>
-                            </div>
-                            <div className="form-group">
-                                <label>Steps</label>
-                                {
-                                    form.steps.map((step, i) => (
-                                        <textarea 
-                                            type="text" 
-                                            key={i}
-                                            value={step} 
-                                            onChange={(e) => handleStep(e, i) } 
-                                        />
-                                    ))
-                                }
-                                <button type='button' onClick={handleStepCount}>Add step</button>
-                            </div>
-                            <div className="buttons">
-                                <button type='submit'>Submit</button>
-                                <button 
-                                    type='button' 
-                                    className='remove' 
-                                    onClick={() => setPopupActive(false)}
-                                >
-                                    Close
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            }
+            <Popup 
+                handleSubmit={handleSubmit}
+                handleIngredient={handleIngredient}
+                handleStep={handleStep}
+                form={form}
+                setForm={setForm}
+                handleIngredientCount={handleIngredientCount}
+                handleStepCount={handleStepCount}
+                setPopupActive={setPopupActive}
+                popupActive={popupActive}
+            />
         </div>
     );
 }

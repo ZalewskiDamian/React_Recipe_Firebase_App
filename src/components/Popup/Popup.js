@@ -25,30 +25,43 @@ const StyledPopupInner = styled.div`
     max-height: calc(100vh - 4rem);
 `;
 
+const StyledFormGroup = styled.div`
+    margin-bottom: 1rem;
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+`;
+
+const StyledLabel = styled.label`
+    display: block;
+    margin-bottom: 0.5rem;
+`;
+
 const Popup = ({handleSubmit, handleIngredient, handleStep, form, setForm, handleIngredientCount, handleStepCount, setPopupActive, popupActive}) => {
     return (
         <StyledPopupWrapper popupActive={popupActive}>
             <StyledPopupInner>
                 <h2>Add a new recipe</h2>
                 <form onSubmit={handleSubmit}>
-                    <div className="form-group">
-                        <label>Title</label>
+                    <StyledFormGroup>
+                        <StyledLabel>Title</StyledLabel>
                         <input 
                             type="text" 
                             value={form.title} 
                             onChange={(e) => setForm({...form, title: e.target.value})} 
                         />
-                    </div>
-                    <div className="form-group">
-                        <label>Description</label>
+                    </StyledFormGroup>
+                    <StyledFormGroup>
+                        <StyledLabel>Description</StyledLabel>
                         <textarea 
                             type="text" 
                             value={form.desc} 
                             onChange={(e) => setForm({...form, desc: e.target.value})} 
                         />
-                    </div>
-                    <div className="form-group">
-                        <label>Ingredients</label>
+                    </StyledFormGroup>
+                    <StyledFormGroup>
+                        <StyledLabel>Ingredients</StyledLabel>
                         {
                             form.ingredients.map((ingredient, i) => (
                                 <input 
@@ -60,9 +73,9 @@ const Popup = ({handleSubmit, handleIngredient, handleStep, form, setForm, handl
                             ))
                         }
                         <button type='button' onClick={handleIngredientCount}>Add ingredient</button>
-                    </div>
-                    <div className="form-group">
-                        <label>Steps</label>
+                    </StyledFormGroup>
+                    <StyledFormGroup>
+                        <StyledLabel>Steps</StyledLabel>
                         {
                             form.steps.map((step, i) => (
                                 <textarea 
@@ -74,7 +87,7 @@ const Popup = ({handleSubmit, handleIngredient, handleStep, form, setForm, handl
                             ))
                         }
                         <button type='button' onClick={handleStepCount}>Add step</button>
-                    </div>
+                    </StyledFormGroup>
                     <div className="buttons">
                         <button type='submit'>Submit</button>
                         <button 

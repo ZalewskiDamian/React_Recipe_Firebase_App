@@ -1,7 +1,25 @@
 import { db } from './firebase.config';
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot, doc, addDoc, deleteDoc } from 'firebase/firestore'; 
-import Popup from './components/Popup';
+import styled from 'styled-components';
+import Popup from './components/Popup/Popup';
+import Layout from './Layout';
+
+
+const StyledRecipesWrapper = styled.div`
+    display: grid;
+    max-width: 1024px;
+    margin: 2rem auto 0;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-gap: 1rem;
+`;
+
+const StyledRecipe = styled.div`
+    background-color: var(--dark);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    text-align: left;
+`;
 
 function App() {
     const [recipes, setRecipies] = useState([]);
@@ -108,45 +126,49 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Moje przepisy</h1>
-            <button onClick={() => setPopupActive(!popupActive)}>Add recipe</button>
-            <div className='recipes'>
-                {recipes.map((recipe) => (
-                    <div className='recipe' key={recipe.id}>
-                        <h3>{recipe.title}</h3>
-                        <p dangerouslySetInnerHTML={{ __html: recipe.desc}}></p>
-                        {recipe.viewing && <div>
-                            <h4>Ingredients</h4>
-                            <ul>
-                                {recipe.ingredients.map((ingredient, i ) => (
-                                    <li key={i}>{ingredient}</li>
-                                ))}
-                            </ul>
-                            <h4>Steps</h4>
-                            <ol>
-                                {recipe.steps.map((step, i ) => (
-                                    <li key={i}>{step}</li>
-                                ))}
-                            </ol>
-                        </div>}
-                        <div className="buttons">
-                            <button onClick={() => handleView(recipe.id)}>View {recipe.viewing ? 'less' : 'more'}</button>
-                            <button className="remove" onClick={() => removeRecipe(recipe.id)}>Remove</button>
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <Popup 
-                handleSubmit={handleSubmit}
-                handleIngredient={handleIngredient}
-                handleStep={handleStep}
-                form={form}
-                setForm={setForm}
-                handleIngredientCount={handleIngredientCount}
-                handleStepCount={handleStepCount}
-                setPopupActive={setPopupActive}
-                popupActive={popupActive}
-            />
+            <Layout>
+                <h1>Moje przepisy</h1>
+                <button onClick={() => setPopupActive(!popupActive)}>Add recipe</button>
+                <StyledRecipesWrapper>
+                    {recipes.map((recipe, index) => (
+                        <StyledRecipe key={index}>
+                            <h3>{recipe.title}</h3>
+                            <p dangerouslySetInnerHTML={{ __html: recipe.desc}}></p>
+                            {recipe.viewing && 
+                                <div>
+                                    <h4>Ingredients</h4>
+                                    <ul>
+                                        {recipe.ingredients.map((ingredient, i ) => (
+                                            <li key={i}>{ingredient}</li>
+                                        ))}
+                                    </ul>
+                                    <h4>Steps</h4>
+                                    <ol>
+                                        {recipe.steps.map((step, i ) => (
+                                            <li key={i}>{step}</li>
+                                        ))}
+                                    </ol>
+                                </div>
+                            }
+                            <div className="buttons">
+                                <button onClick={() => handleView(recipe.id)}>View {recipe.viewing ? 'less' : 'more'}</button>
+                                <button className="remove" onClick={() => removeRecipe(recipe.id)}>Remove</button>
+                            </div>
+                        </StyledRecipe>
+                    ))}
+                </StyledRecipesWrapper>
+                <Popup 
+                    handleSubmit={handleSubmit}
+                    handleIngredient={handleIngredient}
+                    handleStep={handleStep}
+                    form={form}
+                    setForm={setForm}
+                    handleIngredientCount={handleIngredientCount}
+                    handleStepCount={handleStepCount}
+                    setPopupActive={setPopupActive}
+                    popupActive={popupActive}
+                />
+            </Layout>
         </div>
     );
 }

@@ -20,28 +20,12 @@ body {
 .App {
   color: var(--light);
   text-align: center;
-  padding-top: 4rem;
 }
 
 h1 {
   font-size: 2.5rem;
   text-transform: uppercase;
   margin-bottom: 1rem;
-}
-
-.recipes {
-  display: grid;
-  max-width: 1024px;
-  margin: 2rem auto 0;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  grid-gap: 1rem;
-}
-
-.recipe {
-  background-color: var(--dark);
-  padding: 1rem;
-  border-radius: 0.5rem;
-  text-align: left;
 }
 
 button {
@@ -93,25 +77,12 @@ li {
   margin-bottom: 1rem;
 }
 
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group:last-of-type {
-  margin-bottom: 0;
-}
-
 input, textarea {
   display: block;
   width: 100%;
   padding: 0.5rem;
   resize: vertical;
   max-height: 200px;
-  margin-bottom: 0.5rem;
-}
-
-.form-group label {
-  display: block;
   margin-bottom: 0.5rem;
 }
 

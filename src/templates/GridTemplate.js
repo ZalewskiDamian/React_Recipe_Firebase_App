@@ -5,10 +5,6 @@ import UserPageTemplate from './UserPageTemplate';
 const StyledWrapper = styled.div`
     padding: 25px 150px 25px 70px;
 `;
-const StyledTitle = styled.h1`
-    font-size: 2.4rem;
-    color: white;
-`;
 const StyledGrid = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -28,7 +24,6 @@ const GridTemplate = ({ children }) => {
     return (
         <UserPageTemplate>
             <StyledWrapper>
-                <StyledTitle>Śniadania</StyledTitle>
                 <StyledGrid>
                     {children}
                 </StyledGrid>

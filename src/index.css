@@ -6,21 +6,7 @@
   --crimson: #DB3052;
 }
 
-button {
-  appearance: none;
-  background: none;
-  border: none;
-  outline: none;
-  cursor: pointer;
 
-  color: var(--darker);
-  font-weight: bold;
-  text-transform: uppercase;
-
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  background-color: var(--blue);
-}
 
 .buttons {
   display: flex;
@@ -31,10 +17,6 @@ button {
 
 .activeLink {
   background-color: #6fb958;
-}
-
-.buttons button {
-  margin: 0 0.5rem;
 }
 
 button.remove {
@@ -57,17 +39,4 @@ li {
 
 .popup h2 {
   margin-bottom: 1rem;
-}
-
-input, textarea {
-  display: block;
-  width: 100%;
-  padding: 0.5rem;
-  resize: vertical;
-  max-height: 200px;
-  margin-bottom: 0.5rem;
-}
-
-.form-group button {
-  margin-top: 1rem;
 }

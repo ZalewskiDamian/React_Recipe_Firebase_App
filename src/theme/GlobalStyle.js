@@ -23,6 +23,13 @@ const GlobalStyle = createGlobalStyle`
         display: block;
         text-decoration: none;
     }
+
+    .activeLink {
+        background-color: #6fb958;
+    }
+    .activeButton {
+        background-color: #6fb958;
+    }
 `;
 
 export default GlobalStyle;

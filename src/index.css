@@ -15,10 +15,6 @@
   margin-left: -0.5rem;
 }
 
-.activeLink {
-  background-color: #6fb958;
-}
-
 button.remove {
   color: var(--light);
   background-color: var(--crimson);

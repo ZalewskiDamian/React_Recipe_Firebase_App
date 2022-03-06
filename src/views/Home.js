@@ -80,6 +80,7 @@ const Home = () => {
 	const [activity, setActivity] = useState(1.2);
 	const [user, setUser] = useState({});
 	const [demand, setDemand] = useState('');
+	const [active, setActive] = useState(false);
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -93,9 +94,9 @@ const Home = () => {
 		setUser(user);
 
 		if (user.sex === 'woman') {
-			setDemand(.9*(user.weight * 24 * user.activity)) 
+			setDemand(Math.round(.9*(user.weight * 24 * user.activity)) * 1) 
 		} else {
-			setDemand(user.weight * 24 * user.activity)
+			setDemand(Math.round(user.weight * 24 * user.activity) * 1)
 		}
 
 	}
@@ -143,6 +144,7 @@ const Home = () => {
 							name='men'
 							value={sex}
 							onClick={(e) => setSex(e.target.value = e.target.name)}
+							className={sex === 'men' ? 'activeButton' : ''}
 						>
 							Mężczyzna
 						</Button>
@@ -151,6 +153,7 @@ const Home = () => {
 							name='woman'
 							value={sex}
 							onClick={(e) => setSex(e.target.value = e.target.name)}
+							className={sex === 'woman' ? 'activeButton' : ''}
 						>
 							Kobieta
 						</Button>
@@ -181,7 +184,6 @@ const Home = () => {
 				<Paragraph>
 					{demand ? demand + ' kcal' : ''} 
 				</Paragraph>
-				<Paragraph>{console.log(sex, weight, activity)}</Paragraph>
             </StyledWrapper>
         </UserPageTemplate>
     )

@@ -75,10 +75,35 @@ const StyledCell = styled.div`
 `;
 
 const Home = () => {
+	const [sex, setSex] = useState('');
+	const [weight, setWeight] = useState('');
+	const [activity, setActivity] = useState(1.2);
+	const [user, setUser] = useState({});
+	const [demand, setDemand] = useState('');
+
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		const user = {
+			sex: sex,
+			weight: weight,
+			activity: activity,
+		}
+		
+		setUser(user);
+
+		if (user.sex === 'woman') {
+			setDemand(.9*(user.weight * 24 * user.activity)) 
+		} else {
+			setDemand(user.weight * 24 * user.activity)
+		}
+
+	}
+
     return (
         <UserPageTemplate>
             <StyledWrapper>
-                <h1>Wylicz swoje ZAPOTRZEBOWANIE ENERGETYCZNE</h1>
+                <h1>Wylicz swoje zapotrzebowanie energetyczne</h1>
 				<Paragraph>
 					Ten wzór wymaga jedynie znajomości swojej wagi. Jeśli nie chce Ci się liczyć, ale chciałbyś wiedzieć ile może mniej więcej wynosić Twoje zapotrzebowanie, to jest to wzór dla Ciebie.
 				</Paragraph>
@@ -110,24 +135,53 @@ const Home = () => {
 						<StyledCell>codzienne intensywne ćwiczenia + praca fizyczna</StyledCell>
 					</StyledTableRow>
 				</StyledTable>
-                <StyledForm>
+                <StyledForm onSubmit={handleSubmit}>
+					<StyledLabel>Wybierz płeć:</StyledLabel>
                     <StyledButtonGroup>
-                        <Button>Mężczyzna</Button>
-                        <Button>Kobieta</Button>
+                        <Button
+							type='button'
+							name='men'
+							value={sex}
+							onClick={(e) => setSex(e.target.value = e.target.name)}
+						>
+							Mężczyzna
+						</Button>
+                        <Button 
+							type='button'
+							name='woman'
+							value={sex}
+							onClick={(e) => setSex(e.target.value = e.target.name)}
+						>
+							Kobieta
+						</Button>
                     </StyledButtonGroup>
                     <StyledFormGroup>
-                        <StyledLabel>Waga (kg)</StyledLabel>
-                        <StyledInput type='text' />
+                        <StyledLabel>Waga (kg):</StyledLabel>
+                        <StyledInput 
+							type='text'
+							onChange={(e) => setWeight(e.target.value)}
+							value={weight}
+						/>
                     </StyledFormGroup>
 					<StyledFormGroup>
-						<StyledLabel>Współczynnik aktywności fizyczenj</StyledLabel>
-						<StyledSelect>
-							<option>1</option>
-							<option>2</option>
+						<StyledLabel>Współczynnik aktywności fizycznej:</StyledLabel>
+						<StyledSelect
+							onChange={(e) => setActivity(e.target.value)}
+							value={activity}
+						>
+							<option value={1.2}>Niska aktywność</option>
+							<option value={1.35}>Średnio aktywny</option>
+							<option value={1.45}>Aktywny</option>
+							<option value={1.7}>Bardzo aktywny</option>
 						</StyledSelect>
 					</StyledFormGroup>
 					<Button>Oblicz</Button>
                 </StyledForm>
+				<Paragraph bold>Twoje całkowite zapotrzebowanie:</Paragraph>
+				<Paragraph>
+					{demand ? demand + ' kcal' : ''} 
+				</Paragraph>
+				<Paragraph>{console.log(sex, weight, activity)}</Paragraph>
             </StyledWrapper>
         </UserPageTemplate>
     )

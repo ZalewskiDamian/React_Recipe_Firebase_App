@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/React_Recipe_Firebase_App/static/css/main.e59b7895.css",
-    "main.js": "/React_Recipe_Firebase_App/static/js/main.7e50415d.js",
+    "main.js": "/React_Recipe_Firebase_App/static/js/main.02b71201.js",
     "static/media/logo.svg": "/React_Recipe_Firebase_App/static/media/logo.984d2fd6209dcbb19db15844722817b0.svg",
     "index.html": "/React_Recipe_Firebase_App/index.html",
     "main.e59b7895.css.map": "/React_Recipe_Firebase_App/static/css/main.e59b7895.css.map",
-    "main.7e50415d.js.map": "/React_Recipe_Firebase_App/static/js/main.7e50415d.js.map"
+    "main.02b71201.js.map": "/React_Recipe_Firebase_App/static/js/main.02b71201.js.map"
   },
   "entrypoints": [
     "static/css/main.e59b7895.css",
-    "static/js/main.7e50415d.js"
+    "static/js/main.02b71201.js"
   ]
 }

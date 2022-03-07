@@ -1,4 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import { db } from '../firebase.config';
+import { collection, addDoc, updateDoc, doc } from 'firebase/firestore'; 
 import styled from 'styled-components';
 import UserPageTemplate from '../templates/UserPageTemplate';
 import Button from '../components/Button/Button';
@@ -10,10 +12,12 @@ const StyledWrapper = styled.div`
 `;
 const StyledForm = styled.form`
     width: 100%;
-	max-width: 80rem;
-	border: 1px solid black;
+	max-width: 40rem;
+	border: 1px solid ${({theme}) => theme.colors.green};
 	padding: 2.5rem 1.5rem;
 	margin: 0 auto;
+	border-radius: .8rem;
+	box-shadow: 0 4px 25px rgba(38,78,118, .1);
 `;
 const StyledInput = styled.input`
     width: 100%;
@@ -34,11 +38,12 @@ const StyledSelect = styled.select`
 	padding: 1rem 1.5rem;
 	font-weight: ${({theme}) => theme.weight.semiBold};
 	outline: 0;
+	cursor: pointer;
 `;
 
 const StyledFormGroup = styled.div`
 	&:not(:last-child) {
-		margin-bottom: 1rem;
+		margin-bottom: 2rem;
 	}
 `;
 const StyledButtonGroup = styled.div`
@@ -80,23 +85,34 @@ const Home = () => {
 	const [activity, setActivity] = useState(1.2);
 	const [user, setUser] = useState({});
 	const [demand, setDemand] = useState('');
-	const [active, setActive] = useState(false);
+
+	const userRef = collection(db, "user");
+	const updateRef = doc(db, 'user', 'J3QSYXDbS97mD8S6qoRO');
 
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		const user = {
+		const newUser = {
 			sex: sex,
 			weight: weight,
 			activity: activity,
+			demand: demand,
 		}
 		
-		setUser(user);
-
-		if (user.sex === 'woman') {
-			setDemand(Math.round(.9*(user.weight * 24 * user.activity)) * 1) 
+		if (newUser.sex === 'woman') {
+			setDemand(Math.round(.9*(newUser.weight * 24 * newUser.activity)) * 1) 
 		} else {
-			setDemand(Math.round(user.weight * 24 * user.activity) * 1)
+			setDemand(Math.round(newUser.weight * 24 * newUser.activity) * 1)
+		}
+		
+		setUser(newUser);
+
+		if (!user) {
+			addDoc(userRef, user)
+		} else {
+			updateDoc(updateRef, {
+				weight: weight
+			})
 		}
 
 	}
@@ -141,6 +157,7 @@ const Home = () => {
                     <StyledButtonGroup>
                         <Button
 							type='button'
+							small
 							name='men'
 							value={sex}
 							onClick={(e) => setSex(e.target.value = e.target.name)}
@@ -151,6 +168,7 @@ const Home = () => {
                         <Button 
 							type='button'
 							name='woman'
+							small
 							value={sex}
 							onClick={(e) => setSex(e.target.value = e.target.name)}
 							className={sex === 'woman' ? 'activeButton' : ''}

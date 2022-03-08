@@ -81,9 +81,12 @@ const Home = () => {
 	const [sex, setSex] = useState('');
 	const [weight, setWeight] = useState('');
 	const [activity, setActivity] = useState(1.2);
-	const [demand, setDemand] = useState('');
+	const [demand, setDemand] = useState(0);
 	const [user, setUser] = useState({});
 	const [toggle, setToggle] = useState('');
+	const [totalDemand, setTotalDemand] = useState(0);
+	const [loseCalories, setLoseCalories] = useState('');
+	const [gainCalories, setGainCalories] = useState('');
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -101,6 +104,16 @@ const Home = () => {
 		}
 
 		setUser(newUser);
+	}
+
+	const handleLoseWeight = (e) => {
+		e.preventDefault();
+		setTotalDemand(demand - parseInt(loseCalories))
+	}
+
+	const handleGainWeight = (e) => {
+		e.preventDefault();
+		setTotalDemand(demand + parseInt(gainCalories))
 	}
 
     return (
@@ -211,19 +224,33 @@ const Home = () => {
 						</Button>
 					</StyledButtonGroup>
 					{toggle === 'lose' && 
-						<StyledFormGroup>
-							<StyledLabel>Wpisz ile kalorii dziennie chcesz obciąć</StyledLabel>
-							<StyledInput type='text' />
-						</StyledFormGroup>
+						<>
+							<StyledFormGroup>
+								<StyledLabel>Wpisz ile kalorii dziennie chcesz obciąć</StyledLabel>
+								<StyledInput 
+									type='text'
+									value={loseCalories}
+									onChange={(e) => setLoseCalories(e.target.value)}
+								/>
+							</StyledFormGroup>
+							<Button onClick={handleLoseWeight}>Oblicz</Button>
+						</>
 					}
 					{toggle === 'gain' &&
-						<StyledFormGroup>
-							<StyledLabel>Wpisz ile kalorii dziennie chcesz dodać</StyledLabel>
-							<StyledInput type='text' />
-						</StyledFormGroup>
+						<>
+							<StyledFormGroup>
+								<StyledLabel>Wpisz ile kalorii dziennie chcesz dodać</StyledLabel>
+								<StyledInput 
+									type='text'
+									value={gainCalories}  
+									onChange={(e) => setGainCalories(e.target.value)}
+								/>
+							</StyledFormGroup>
+							<Button onClick={handleGainWeight}>Oblicz</Button>
+						</>
 					}
-					<Button>Oblicz</Button>
 				</StyledForm>
+				{totalDemand !== 0 && <Paragraph>Twoje zapotrzebowanie wynosi teraz: {totalDemand}</Paragraph>}
             </StyledWrapper>
         </UserPageTemplate>
     )

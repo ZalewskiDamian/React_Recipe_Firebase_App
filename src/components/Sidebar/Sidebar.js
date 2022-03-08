@@ -1,11 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import { db } from '../../firebase.config';
-import { collection, onSnapshot, doc} from 'firebase/firestore'; 
 import logo from '../../assets/images/logo.svg';
 import { sidebarData } from './SidebarData';
-import Paragraph from '../Paragraph/Paragraph';
 
 
 const StyledSidebar = styled.nav`
@@ -61,21 +58,6 @@ const StyledLogo = styled.img`
 `;
 
 const Sidebar = () => {
-    const [userData, setUserData] = useState([]);
-
-    const userDataRef = collection(db, "user");
-
-    useEffect(() => {
-        onSnapshot(userDataRef, snapshot => {
-            setUserData(snapshot.docs.map(doc => {
-                return {
-                    id: doc.id,
-                    ...doc.data()
-                }
-            }))
-        })
-    }, []);
-
     return (
         <StyledSidebar>
             <StyledLogo src={logo} alt='logo' />
@@ -97,15 +79,6 @@ const Sidebar = () => {
                         </StyledLinkItem>
                 )})}
             </StyledLinkList>
-            {userData.map((user, index) => (
-                <div key={index}>
-                    <Paragraph>{user.id}</Paragraph>
-                    <Paragraph>{user.sex}</Paragraph>
-                    <Paragraph>{user.weight}</Paragraph>
-                    <Paragraph>{user.activity}</Paragraph>
-                    <Paragraph>{user.demand}</Paragraph>
-                </div>
-            ))}
         </StyledSidebar>
     )
 }

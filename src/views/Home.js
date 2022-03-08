@@ -1,6 +1,4 @@
-import React, {useState, useEffect} from 'react';
-import { db } from '../firebase.config';
-import { collection, addDoc, updateDoc, doc } from 'firebase/firestore'; 
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import UserPageTemplate from '../templates/UserPageTemplate';
 import Button from '../components/Button/Button';
@@ -17,7 +15,7 @@ const StyledForm = styled.form`
 	padding: 2.5rem 1.5rem;
 	margin: 0 auto;
 	border-radius: .8rem;
-	box-shadow: 0 4px 25px rgba(38,78,118, .1);
+	/* box-shadow: 0 4px 25px rgba(38,78,118, .1); */
 `;
 const StyledInput = styled.input`
     width: 100%;
@@ -83,38 +81,26 @@ const Home = () => {
 	const [sex, setSex] = useState('');
 	const [weight, setWeight] = useState('');
 	const [activity, setActivity] = useState(1.2);
-	const [user, setUser] = useState({});
 	const [demand, setDemand] = useState('');
-
-	const userRef = collection(db, "user");
-	const updateRef = doc(db, 'user', 'J3QSYXDbS97mD8S6qoRO');
+	const [user, setUser] = useState({});
+	const [toggle, setToggle] = useState('');
 
 	const handleSubmit = e => {
 		e.preventDefault();
+
+		if (sex === 'woman') {
+			setDemand(Math.round(.9*(weight * 24 * activity)) * 1) 
+		} else {
+			setDemand(Math.round(weight * 24 * activity) * 1)
+		}
 
 		const newUser = {
 			sex: sex,
 			weight: weight,
 			activity: activity,
-			demand: demand,
 		}
-		
-		if (newUser.sex === 'woman') {
-			setDemand(Math.round(.9*(newUser.weight * 24 * newUser.activity)) * 1) 
-		} else {
-			setDemand(Math.round(newUser.weight * 24 * newUser.activity) * 1)
-		}
-		
+
 		setUser(newUser);
-
-		if (!user) {
-			addDoc(userRef, user)
-		} else {
-			updateDoc(updateRef, {
-				weight: weight
-			})
-		}
-
 	}
 
     return (
@@ -198,10 +184,46 @@ const Home = () => {
 					</StyledFormGroup>
 					<Button>Oblicz</Button>
                 </StyledForm>
-				<Paragraph bold>Twoje całkowite zapotrzebowanie:</Paragraph>
+				<Paragraph bold>Twoje całkowite dzienne zapotrzebowanie:</Paragraph>
 				<Paragraph>
 					{demand ? demand + ' kcal' : ''} 
 				</Paragraph>
+				<StyledForm>
+					<Paragraph>Jeśli chcesz zachować wagę nie wybieraj nic</Paragraph>
+					<StyledButtonGroup>
+						<Button 
+							type='button'
+							name='lose'
+							value={toggle}
+							onClick={(e) => setToggle(e.target.value = e.target.name)}
+							className={toggle === 'lose' ? 'activeButton' : ''}
+						>
+							Chcę schudnąć
+							</Button>
+						<Button 
+							type='button'
+							name='gain' 
+							value={toggle}
+							onClick={(e) => setToggle(e.target.value = e.target.name)}
+							className={toggle === 'gain' ? 'activeButton' : ''}
+						>
+							Chcę przytyć
+						</Button>
+					</StyledButtonGroup>
+					{toggle === 'lose' && 
+						<StyledFormGroup>
+							<StyledLabel>Wpisz ile kalorii dziennie chcesz obciąć</StyledLabel>
+							<StyledInput type='text' />
+						</StyledFormGroup>
+					}
+					{toggle === 'gain' &&
+						<StyledFormGroup>
+							<StyledLabel>Wpisz ile kalorii dziennie chcesz dodać</StyledLabel>
+							<StyledInput type='text' />
+						</StyledFormGroup>
+					}
+					<Button>Oblicz</Button>
+				</StyledForm>
             </StyledWrapper>
         </UserPageTemplate>
     )

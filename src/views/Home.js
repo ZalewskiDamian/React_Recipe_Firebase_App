@@ -82,7 +82,7 @@ const Home = () => {
 	const [sex, setSex] = useState('');
 	const [weight, setWeight] = useState('');
 	const [activity, setActivity] = useState(1.2);
-	const [demand, setDemand, totalDemand, setTotalDemand, toggle, setToggle, loseCalories, setLoseCalories, gainCalories, setGainCalories] = useContext(CaloriesContext);
+	const {demand, setDemand, totalDemand, setTotalDemand, toggle, setToggle, loseCalories, setLoseCalories, gainCalories, setGainCalories} = useContext(CaloriesContext);
 	const [user, setUser] = useState({});
 
 	const handleSubmit = e => {

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { CaloriesProvider } from './context';
 import MainTemplate from './templates/MainTemplate';
 import Breakfasts from './views/Breakfasts';

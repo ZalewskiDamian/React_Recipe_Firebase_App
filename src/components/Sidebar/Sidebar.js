@@ -60,9 +60,7 @@ const StyledLogo = styled.img`
 `;
 
 const Sidebar = () => {
-    const {demand} = useContext(CaloriesContext);
-    // const [loseCalories] = useContext(CaloriesContext);
-    // const [gainCalories] = useContext(CaloriesContext);
+    const {demand, totalDemand} = useContext(CaloriesContext);
 
     return (
         <StyledSidebar>
@@ -86,6 +84,7 @@ const Sidebar = () => {
                 )})}
             </StyledLinkList>
             <Paragraph>Dzienne kcal: {demand}</Paragraph>
+            <Paragraph>Total kcal: {totalDemand}</Paragraph>
         </StyledSidebar>
     )
 }

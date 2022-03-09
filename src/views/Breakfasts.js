@@ -4,6 +4,7 @@ import { collection, onSnapshot, doc, addDoc, deleteDoc } from 'firebase/firesto
 import styled from 'styled-components';
 import Popup from '../components/Popup/Popup';
 import GridTemplate from '../templates/GridTemplate';
+import Card from '../components/Card/Card';
 
 const StyledRecipe = styled.div`
     background-color: var(--dark);
@@ -120,7 +121,20 @@ const Breakfasts = () => {
     return (
         <GridTemplate>
             {/* <button onClick={() => setPopupActive(!popupActive)}>Add recipe</button> */}
-            {recipes.map((recipe, index) => (
+            {recipes.map((recipe) => (
+                <Card 
+                    key={recipe.id}
+                    image={recipe.image}
+                    title={recipe.title}
+                    desc={recipe.desc}
+                    viewing={recipe.viewing}
+                    ingredients={recipe.ingredients}
+                    steps={recipe.steps}
+                    id={recipe.id}
+                    handleView={handleView}
+                />
+            ))}
+            {/* {recipes.map((recipe, index) => (
                 <StyledRecipe key={index}>
                     <h3>{recipe.title}</h3>
                     <p dangerouslySetInnerHTML={{ __html: recipe.desc}}></p>
@@ -145,7 +159,7 @@ const Breakfasts = () => {
                         <button className="remove" onClick={() => removeRecipe(recipe.id)}>Remove</button>
                     </div>
                 </StyledRecipe>
-            ))}
+            ))} */}
             <Popup 
                 handleSubmit={handleSubmit}
                 handleIngredient={handleIngredient}

@@ -11,11 +11,10 @@ const StyledWrapper = styled.div`
 const StyledForm = styled.form`
     width: 100%;
 	max-width: 40rem;
-	border: 1px solid ${({theme}) => theme.colors.green};
+	border: 1px solid ${({theme}) => theme.colors.gray};
 	padding: 2.5rem 1.5rem;
-	margin: 0 auto;
+	margin: 0 auto 3rem;
 	border-radius: .8rem;
-	/* box-shadow: 0 4px 25px rgba(38,78,118, .1); */
 `;
 const StyledInput = styled.input`
     width: 100%;
@@ -54,7 +53,7 @@ const StyledTable = styled.div`
 	width: 100%;
 	max-width: 70rem;
 	margin: 0 auto 2rem;
-	border: 1px solid black;
+	border: 1px solid ${({theme}) => theme.colors.grayDark};
 	display: flex;
 	flex-direction: column;
 `;
@@ -63,7 +62,7 @@ const StyledTableRow = styled.div`
 	grid-template-columns: 25% 15% 60%;
 
 	&:not(:last-of-type) {
-		border-bottom: 1px solid black;
+		border-bottom: 1px solid ${({theme}) => theme.colors.grayDark};
 	}
 `;
 const StyledCell = styled.div`
@@ -73,7 +72,7 @@ const StyledCell = styled.div`
 	align-items: center;
 
 	&:not(:last-of-type) {
-		border-right: 1px solid black;
+		border-right: 1px solid ${({theme}) => theme.colors.grayDark};
 	}
 `;
 
@@ -114,7 +113,7 @@ const Home = () => {
 
     return (
 		<StyledWrapper>
-			<h1>Wylicz swoje zapotrzebowanie energetyczne</h1>
+			<h1>Oblicz swoje zapotrzebowanie kaloryczne</h1>
 			<Paragraph>
 				Ten wzór wymaga jedynie znajomości swojej wagi. Jeśli nie chce Ci się liczyć, ale chciałbyś wiedzieć ile może mniej więcej wynosić Twoje zapotrzebowanie, to jest to wzór dla Ciebie.
 			</Paragraph>
@@ -191,11 +190,12 @@ const Home = () => {
 					</StyledSelect>
 				</StyledFormGroup>
 				<Button>Oblicz</Button>
+				<Paragraph bold>Twoje całkowite dzienne zapotrzebowanie:</Paragraph>
+				<Paragraph>
+					{demand ? demand + ' kcal' : ''} 
+				</Paragraph>
 			</StyledForm>
-			<Paragraph bold>Twoje całkowite dzienne zapotrzebowanie:</Paragraph>
-			<Paragraph>
-				{demand ? demand + ' kcal' : ''} 
-			</Paragraph>
+			
 			<StyledForm>
 				<Paragraph>Jeśli chcesz zachować wagę nie wybieraj nic</Paragraph>
 				<StyledButtonGroup>
@@ -245,7 +245,7 @@ const Home = () => {
 					</>
 				}
 			</StyledForm>
-			{totalDemand !== '' && <Paragraph>Twoje zapotrzebowanie wynosi teraz: {totalDemand}</Paragraph>}
+			{totalDemand !== '' && <Paragraph>Twoje zapotrzebowanie wynosi teraz: {totalDemand} kcal</Paragraph>}
 		</StyledWrapper>
     )
 }

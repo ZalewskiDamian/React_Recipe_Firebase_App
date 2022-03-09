@@ -9,12 +9,11 @@ const GlobalStyle = createGlobalStyle`
     
     html {
         font-size: 62.5%;
-        padding: 0;
-        margin: 0;
     }
     
     body {
-        padding-left: 220px;
+        padding: 0 0 0 270px;
+        margin: 0;
         font-size: 1.6rem;
         font-family: "Montserrat", sans-serif;
     }
@@ -28,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
         background-color: #6fb958;
     }
     .activeButton {
-        background-color: #6fb958;
+        background-color: #6941c6;
     }
 `;
 

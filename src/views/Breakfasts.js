@@ -5,15 +5,6 @@ import styled from 'styled-components';
 import Popup from '../components/Popup/Popup';
 import GridTemplate from '../templates/GridTemplate';
 
-
-const StyledRecipesWrapper = styled.div`
-    /* display: grid;
-    max-width: 1024px;
-    margin: 2rem auto 0;
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-    grid-gap: 1rem; */
-`;
-
 const StyledRecipe = styled.div`
     background-color: var(--dark);
     padding: 1rem;
@@ -22,6 +13,8 @@ const StyledRecipe = styled.div`
 `;
 
 const Breakfasts = () => {
+    
+    console.log('breakfafst')
     const [recipes, setRecipies] = useState([]);
     const [form, setForm] = useState({
         title: '',
@@ -126,35 +119,33 @@ const Breakfasts = () => {
 
     return (
         <GridTemplate>
-            <button onClick={() => setPopupActive(!popupActive)}>Add recipe</button>
-            <StyledRecipesWrapper>
-                {recipes.map((recipe, index) => (
-                    <StyledRecipe key={index}>
-                        <h3>{recipe.title}</h3>
-                        <p dangerouslySetInnerHTML={{ __html: recipe.desc}}></p>
-                        {recipe.viewing && 
-                            <div>
-                                <h4>Ingredients</h4>
-                                <ul>
-                                    {recipe.ingredients.map((ingredient, i ) => (
-                                        <li key={i}>{ingredient}</li>
-                                    ))}
-                                </ul>
-                                <h4>Steps</h4>
-                                <ol>
-                                    {recipe.steps.map((step, i ) => (
-                                        <li key={i}>{step}</li>
-                                    ))}
-                                </ol>
-                            </div>
-                        }
-                        <div className="buttons">
-                            <button onClick={() => handleView(recipe.id)}>View {recipe.viewing ? 'less' : 'more'}</button>
-                            <button className="remove" onClick={() => removeRecipe(recipe.id)}>Remove</button>
+            {/* <button onClick={() => setPopupActive(!popupActive)}>Add recipe</button> */}
+            {recipes.map((recipe, index) => (
+                <StyledRecipe key={index}>
+                    <h3>{recipe.title}</h3>
+                    <p dangerouslySetInnerHTML={{ __html: recipe.desc}}></p>
+                    {recipe.viewing && 
+                        <div>
+                            <h4>Ingredients</h4>
+                            <ul>
+                                {recipe.ingredients.map((ingredient, i ) => (
+                                    <li key={i}>{ingredient}</li>
+                                ))}
+                            </ul>
+                            <h4>Steps</h4>
+                            <ol>
+                                {recipe.steps.map((step, i ) => (
+                                    <li key={i}>{step}</li>
+                                ))}
+                            </ol>
                         </div>
-                    </StyledRecipe>
-                ))}
-            </StyledRecipesWrapper>
+                    }
+                    <div className="buttons">
+                        <button onClick={() => handleView(recipe.id)}>View {recipe.viewing ? 'less' : 'more'}</button>
+                        <button className="remove" onClick={() => removeRecipe(recipe.id)}>Remove</button>
+                    </div>
+                </StyledRecipe>
+            ))}
             <Popup 
                 handleSubmit={handleSubmit}
                 handleIngredient={handleIngredient}

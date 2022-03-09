@@ -8,9 +8,10 @@ export const CaloriesProvider = props => {
     const [loseCalories, setLoseCalories] = useState('');
 	const [gainCalories, setGainCalories] = useState('');
 	const [toggle, setToggle] = useState('');
+    const [user, setUser] = useState({});
 
     return (
-        <CaloriesContext.Provider value={{demand, setDemand, totalDemand, setTotalDemand, loseCalories, setLoseCalories, gainCalories, setGainCalories, toggle, setToggle}}>
+        <CaloriesContext.Provider value={{demand, setDemand, totalDemand, setTotalDemand, loseCalories, setLoseCalories, gainCalories, setGainCalories, toggle, setToggle, user, setUser}}>
             {props.children}
         </CaloriesContext.Provider>
     )

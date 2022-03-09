@@ -1,5 +1,7 @@
 import home from '../../assets/images/home.png';
+import breakfasts from '../../assets/images/breakfast.png';
 import lunch from '../../assets/images/lunch.png';
+import dinner from '../../assets/images/dinner.png';
 
 export const sidebarData = [
     {
@@ -9,7 +11,7 @@ export const sidebarData = [
     },
     {
         title: 'Śniadania',
-        icon: lunch,
+        icon: breakfasts,
         link: '/breakfasts'
     },
     {
@@ -19,7 +21,7 @@ export const sidebarData = [
     },
     {
         title: 'Kolacje',
-        icon: lunch,
+        icon: dinner,
         link: '/dinners'
     },
 ];

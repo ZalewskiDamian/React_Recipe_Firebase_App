@@ -1,9 +1,10 @@
 export const theme = {
     colors: {
-        green: '#8cce78',
-        greenDark: '#6fb958',
+        blue: '#6941c6',
+        blueLight: '#7f56da',
+        navBorder: '#774fd3',
         black: '#333333',
-        white: '#ffffff',
+        white: '#f7e2ff',
         gray: '#ededed',
     },
     weight: {
@@ -13,6 +14,7 @@ export const theme = {
         bold: '700',
     },
     font: {
+        userText: '1.4rem',
         paragraph: '1.6rem',
         button: '1.8rem',
     }

@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import UserPageTemplate from './UserPageTemplate';
 
 const StyledWrapper = styled.div`
     padding: 25px 150px 25px 70px;
@@ -22,13 +20,11 @@ const StyledGrid = styled.div`
 
 const GridTemplate = ({ children }) => {
     return (
-        <UserPageTemplate>
-            <StyledWrapper>
-                <StyledGrid>
-                    {children}
-                </StyledGrid>
-            </StyledWrapper>
-        </UserPageTemplate>
+        <StyledWrapper>
+            <StyledGrid>
+                {children}
+            </StyledGrid>
+        </StyledWrapper>
     )
 }
 

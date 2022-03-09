@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/images/logo.svg';
 import { sidebarData } from './SidebarData';
+import { CaloriesContext } from '../../context';
+import Paragraph from '../Paragraph/Paragraph';
 
 
 const StyledSidebar = styled.nav`
@@ -58,6 +60,10 @@ const StyledLogo = styled.img`
 `;
 
 const Sidebar = () => {
+    const {demand} = useContext(CaloriesContext);
+    // const [loseCalories] = useContext(CaloriesContext);
+    // const [gainCalories] = useContext(CaloriesContext);
+
     return (
         <StyledSidebar>
             <StyledLogo src={logo} alt='logo' />
@@ -79,6 +85,7 @@ const Sidebar = () => {
                         </StyledLinkItem>
                 )})}
             </StyledLinkList>
+            <Paragraph>Dzienne kcal: {demand}</Paragraph>
         </StyledSidebar>
     )
 }

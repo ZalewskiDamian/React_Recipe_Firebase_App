@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import styled from 'styled-components';
+import { CaloriesContext } from '../context';
 import UserPageTemplate from '../templates/UserPageTemplate';
 import Button from '../components/Button/Button';
 import Paragraph from '../components/Paragraph/Paragraph';
@@ -81,12 +82,8 @@ const Home = () => {
 	const [sex, setSex] = useState('');
 	const [weight, setWeight] = useState('');
 	const [activity, setActivity] = useState(1.2);
-	const [demand, setDemand] = useState(0);
+	const [demand, setDemand, totalDemand, setTotalDemand, toggle, setToggle, loseCalories, setLoseCalories, gainCalories, setGainCalories] = useContext(CaloriesContext);
 	const [user, setUser] = useState({});
-	const [toggle, setToggle] = useState('');
-	const [totalDemand, setTotalDemand] = useState(0);
-	const [loseCalories, setLoseCalories] = useState('');
-	const [gainCalories, setGainCalories] = useState('');
 
 	const handleSubmit = e => {
 		e.preventDefault();
@@ -174,6 +171,7 @@ const Home = () => {
 						>
 							Kobieta
 						</Button>
+						{console.log('sex: ', sex)}
                     </StyledButtonGroup>
                     <StyledFormGroup>
                         <StyledLabel>Waga (kg):</StyledLabel>
@@ -183,6 +181,7 @@ const Home = () => {
 							value={weight}
 						/>
                     </StyledFormGroup>
+					{console.log('weight: ', weight)}
 					<StyledFormGroup>
 						<StyledLabel>Współczynnik aktywności fizycznej:</StyledLabel>
 						<StyledSelect
@@ -194,12 +193,14 @@ const Home = () => {
 							<option value={1.45}>Aktywny</option>
 							<option value={1.7}>Bardzo aktywny</option>
 						</StyledSelect>
+						{console.log('activity: ', activity)}
 					</StyledFormGroup>
 					<Button>Oblicz</Button>
                 </StyledForm>
 				<Paragraph bold>Twoje całkowite dzienne zapotrzebowanie:</Paragraph>
 				<Paragraph>
 					{demand ? demand + ' kcal' : ''} 
+					{console.log('demand: ', demand)}
 				</Paragraph>
 				<StyledForm>
 					<Paragraph>Jeśli chcesz zachować wagę nie wybieraj nic</Paragraph>
@@ -212,7 +213,8 @@ const Home = () => {
 							className={toggle === 'lose' ? 'activeButton' : ''}
 						>
 							Chcę schudnąć
-							</Button>
+						</Button>
+						{console.log('toggle: ', toggle)}
 						<Button 
 							type='button'
 							name='gain' 
@@ -250,7 +252,8 @@ const Home = () => {
 						</>
 					}
 				</StyledForm>
-				{totalDemand !== 0 && <Paragraph>Twoje zapotrzebowanie wynosi teraz: {totalDemand}</Paragraph>}
+				{totalDemand !== '' && <Paragraph>Twoje zapotrzebowanie wynosi teraz: {totalDemand}</Paragraph>}
+				{console.log('totalDemand: ', totalDemand)}
             </StyledWrapper>
         </UserPageTemplate>
     )

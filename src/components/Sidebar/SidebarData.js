@@ -17,7 +17,7 @@ export const sidebarData = [
     {
         title: 'Obiady',
         icon: lunch,
-        link: '/lunchs'
+        link: '/lunches'
     },
     {
         title: 'Kolacje',

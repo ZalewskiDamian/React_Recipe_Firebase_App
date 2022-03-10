@@ -4,15 +4,15 @@ import { collection, onSnapshot, addDoc } from 'firebase/firestore';
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/Card/Card';
 
-const Dinners = () => {
-    console.log('dinners');
-    const [dinners, setDinners] = useState([]);
+const Lunchs = () => {
+    console.log('lunches');
+    const [lunches, setLunches] = useState([]);
 
-    const dinnersCollectionRef = collection(db, "recipes");
+    const lunchesCollectionRef = collection(db, "recipes");
 
     useEffect(() => {
-        onSnapshot(dinnersCollectionRef, snapshot => {
-            setDinners(snapshot.docs.map(doc => {
+        onSnapshot(lunchesCollectionRef, snapshot => {
+            setLunches(snapshot.docs.map(doc => {
                 return {
                     id: doc.id,
                     viewing: false,
@@ -23,22 +23,21 @@ const Dinners = () => {
     },[]);
 
     const handleView = id => {
-        const dinnersClone = [...dinners];
+        const lunchesClone = [...lunches];
 
-        dinnersClone.forEach(dinner => {
-            if (dinner.id === id) {
-                dinner.viewing = !dinner.viewing
+        lunchesClone.forEach(lunch => {
+            if (lunch.id === id) {
+                lunch.viewing = !lunch.viewing
             } else {
-                dinner.viewing = false
+                lunch.viewing = false
             }
         })
 
-        setDinners(dinnersClone)
+        setLunches(lunchesClone)
     }
-
     return (
         <GridTemplate>
-            {dinners.map((recipe) => (
+            {lunches.map((recipe) => (
                 <Card 
                     key={recipe.id}
                     image={recipe.image}
@@ -57,8 +56,7 @@ const Dinners = () => {
                 />
             ))}
         </GridTemplate>
-        
     )
 }
 
-export default Dinners;
+export default Lunchs;

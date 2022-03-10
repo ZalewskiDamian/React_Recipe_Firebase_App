@@ -6,7 +6,7 @@ import { theme } from './theme/mainTheme';
 import Breakfasts from './views/Breakfasts';
 import Home from './views/Home';
 import Dinners from './views/Dinners';
-import Lunchs from './views/Lunchs';
+import Lunches from './views/Lunches';
 import Sidebar from './components/Sidebar/Sidebar';
 
 const App = () => (
@@ -18,7 +18,7 @@ const App = () => (
                 <Routes>
                     <Route path='/' element={ <Home /> } />
                     <Route path='/breakfasts' element={ <Breakfasts /> } />
-                    <Route path='/lunchs' element={ <Lunchs /> } />
+                    <Route path='/lunches' element={ <Lunches /> } />
                     <Route path='/dinners' element={ <Dinners /> } />
                 </Routes>
             </CaloriesProvider>

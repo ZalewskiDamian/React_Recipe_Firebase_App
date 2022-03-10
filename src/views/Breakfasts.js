@@ -1,35 +1,26 @@
 import { db } from '../firebase.config';
 import { useState, useEffect } from 'react';
-import { collection, onSnapshot, doc, addDoc, deleteDoc } from 'firebase/firestore'; 
-import styled from 'styled-components';
+import { collection, onSnapshot, addDoc } from 'firebase/firestore'; 
 import Popup from '../components/Popup/Popup';
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/Card/Card';
 
-const StyledRecipe = styled.div`
-    background-color: var(--dark);
-    padding: 1rem;
-    border-radius: 0.5rem;
-    text-align: left;
-`;
-
 const Breakfasts = () => {
-    
     console.log('breakfafst')
-    const [recipes, setRecipies] = useState([]);
-    const [form, setForm] = useState({
-        title: '',
-        desc: '',
-        ingredients: [],
-        steps: []
-    });
-    const [popupActive, setPopupActive] = useState(false);
+    const [breakfasts, setBreakfasts] = useState([]);
+    // const [form, setForm] = useState({
+    //     title: '',
+    //     desc: '',
+    //     ingredients: [],
+    //     steps: []
+    // });
+    // const [popupActive, setPopupActive] = useState(false);
 
-    const recipesCollectionRef = collection(db, "recipes");
+    const breakfastsCollectionRef = collection(db, "breakfasts");
 
     useEffect(() => {
-        onSnapshot(recipesCollectionRef, snapshot => {
-            setRecipies(snapshot.docs.map(doc => {
+        onSnapshot(breakfastsCollectionRef, snapshot => {
+            setBreakfasts(snapshot.docs.map(doc => {
                 return {
                     id: doc.id,
                     viewing: false,
@@ -40,91 +31,92 @@ const Breakfasts = () => {
     },[]);
 
     const handleView = id => {
-        const recipesClone = [...recipes];
+        const breakfastsClone = [...breakfasts];
 
-        recipesClone.forEach(recipe => {
-            if (recipe.id === id) {
-                recipe.viewing = !recipe.viewing
+        breakfastsClone.forEach(breakfast => {
+            if (breakfast.id === id) {
+                breakfast.viewing = !breakfast.viewing
             } else {
-                recipe.viewing = false
+                breakfast.viewing = false
             }
         })
 
-        setRecipies(recipesClone)
+        setBreakfasts(breakfastsClone)
     }
 
-    const handleSubmit = e => {
-        e.preventDefault();
+    // const handleSubmit = e => {
+    //     e.preventDefault();
 
-        if (
-            !form.title || 
-            !form.desc ||
-            !form.ingredients ||
-            !form.steps
-        ) {
-            alert("please fill out all fields")
-            return 
-        }
+    //     if (
+    //         !form.title || 
+    //         !form.desc ||
+    //         !form.ingredients ||
+    //         !form.steps
+    //     ) {
+    //         alert("please fill out all fields")
+    //         return 
+    //     }
 
-        addDoc(recipesCollectionRef, form)
+    //     addDoc(recipesCollectionRef, form)
 
-        setForm({
-            title: '',
-            desc: '',
-            ingredients: [],
-            steps: []
-        })
+    //     setForm({
+    //         title: '',
+    //         desc: '',
+    //         ingredients: [],
+    //         steps: []
+    //     })
 
-        setPopupActive(false)
-    }
+    //     setPopupActive(false)
+    // }
 
-    const handleIngredient = (e, i) => {
-        const ingredientsClose = [...form.ingredients]
+    // const handleIngredient = (e, i) => {
+    //     const ingredientsClose = [...form.ingredients]
 
-        ingredientsClose[i] = e.target.value;
+    //     ingredientsClose[i] = e.target.value;
 
-        setForm({
-            ...form,
-            ingredients: ingredientsClose
-        })
-    }
+    //     setForm({
+    //         ...form,
+    //         ingredients: ingredientsClose
+    //     })
+    // }
 
-    const handleStep = (e, i) => {
-        const stepsClose = [...form.steps]
+    // const handleStep = (e, i) => {
+    //     const stepsClose = [...form.steps]
 
-        stepsClose[i] = e.target.value;
+    //     stepsClose[i] = e.target.value;
 
-        setForm({
-            ...form,
-            steps: stepsClose
-        })
-    }
+    //     setForm({
+    //         ...form,
+    //         steps: stepsClose
+    //     })
+    // }
 
-    const handleIngredientCount = () => {
-        setForm({
-            ...form,
-            ingredients: [...form.ingredients, ""]
-        })
-    }
+    // const handleIngredientCount = () => {
+    //     setForm({
+    //         ...form,
+    //         ingredients: [...form.ingredients, ""]
+    //     })
+    // }
 
-    const handleStepCount = () => {
-        setForm({
-            ...form,
-            steps: [...form.steps, ""]
-        })
-    }
-
-    const removeRecipe = id => {
-        deleteDoc(doc(db, "recipes", id))
-    }
+    // const handleStepCount = () => {
+    //     setForm({
+    //         ...form,
+    //         steps: [...form.steps, ""]
+    //     })
+    // }
 
     return (
         <GridTemplate>
             {/* <button onClick={() => setPopupActive(!popupActive)}>Add recipe</button> */}
-            {recipes.map((recipe) => (
+            {breakfasts.map((recipe) => (
                 <Card 
                     key={recipe.id}
                     image={recipe.image}
+                    time={recipe.time}
+                    weight={recipe.weight}
+                    proteins={recipe.proteins}
+                    carbons={recipe.carbons}
+                    fats={recipe.fats}
                     title={recipe.title}
                     desc={recipe.desc}
                     viewing={recipe.viewing}
@@ -134,33 +126,7 @@ const Breakfasts = () => {
                     handleView={handleView}
                 />
             ))}
-            {/* {recipes.map((recipe, index) => (
-                <StyledRecipe key={index}>
-                    <h3>{recipe.title}</h3>
-                    <p dangerouslySetInnerHTML={{ __html: recipe.desc}}></p>
-                    {recipe.viewing && 
-                        <div>
-                            <h4>Ingredients</h4>
-                            <ul>
-                                {recipe.ingredients.map((ingredient, i ) => (
-                                    <li key={i}>{ingredient}</li>
-                                ))}
-                            </ul>
-                            <h4>Steps</h4>
-                            <ol>
-                                {recipe.steps.map((step, i ) => (
-                                    <li key={i}>{step}</li>
-                                ))}
-                            </ol>
-                        </div>
-                    }
-                    <div className="buttons">
-                        <button onClick={() => handleView(recipe.id)}>View {recipe.viewing ? 'less' : 'more'}</button>
-                        <button className="remove" onClick={() => removeRecipe(recipe.id)}>Remove</button>
-                    </div>
-                </StyledRecipe>
-            ))} */}
-            <Popup 
+            {/* <Popup 
                 handleSubmit={handleSubmit}
                 handleIngredient={handleIngredient}
                 handleStep={handleStep}
@@ -170,7 +136,7 @@ const Breakfasts = () => {
                 handleStepCount={handleStepCount}
                 setPopupActive={setPopupActive}
                 popupActive={popupActive}
-            />
+            /> */}
         </GridTemplate>
     )
 }

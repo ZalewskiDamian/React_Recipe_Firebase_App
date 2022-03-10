@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import Button from '../Button/Button';
 import Paragraph from '../Paragraph/Paragraph';
+import timer from '../../assets/images/timer.png';
+import scale from '../../assets/images/scale.png';
 
 const StyledCardWrapper = styled.div`
     overflow: hidden;
@@ -12,6 +14,9 @@ const StyledCardWrapper = styled.div`
 `;
 const StyledCardContent = styled.div`
     padding: 1.5rem;
+`;
+const StyledCardImageWrapper = styled.div`
+    position: relative;
 `;
 const StyledCardImage = styled.img`
     width: 100%;
@@ -35,33 +40,96 @@ const StyledButtonGroup = styled.div`
     flex-direction: space-around;
     align-items: center;
 `;
+const StyledOrderedList = styled.ol`
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+`;
+const StyledUnorderedList = styled.ul`
+    margin: 1.5rem 0;
+`;
+const StyledListItem = styled.li`
+    margin-bottom: .5rem;
+    line-height: 1.4;
+`;
+const StyledMacroWrapper = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 1rem 1rem 0 1rem;
+`;
+const StyledMacroInner = styled.div`
+    display: grid;
+    grid-template-columns: 2.4rem 1fr;
+    grid-gap: .5rem;
+    align-items: center;
+    padding: .5rem;
+    border: 1px solid ${({theme}) => theme.colors.grayDark};
+    border-radius: .6rem;
+`;
+const StyledMacroText = styled.span`
+    font-size: ${({theme}) => theme.font.paragraph};
+    font-weight: ${({theme}) => theme.weight.semiBold};
+`;
+const StyledTimeInner = styled(StyledMacroInner)`
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    background-color: #fff;
+`;
+const StyledIcon = styled.img`
+    width: 2.4rem;
+`;
 
-const Card = ({title, desc, viewing, image, ingredients, steps, id, handleView}) => {
+const Card = ({title, time, desc, proteins, carbons, fats, weight, viewing, image, ingredients, steps, id, handleView}) => {
     return (
         <StyledCardWrapper>
-            <StyledCardImage src={image} alt='title' />
+            <StyledCardImageWrapper>
+                <StyledCardImage src={image} alt='title' />
+                <StyledTimeInner>
+                    <StyledIcon src={timer} alt='timer' />
+                    <StyledMacroText>{time} min</StyledMacroText>
+                </StyledTimeInner>
+            </StyledCardImageWrapper>
+            <StyledMacroWrapper>
+                <StyledMacroInner>
+                    <StyledIcon src={scale} alt='scale' />
+                    <StyledMacroText>{weight} g</StyledMacroText>
+                </StyledMacroInner>
+                <StyledMacroInner>
+                    <StyledMacroText>B:</StyledMacroText>
+                    <StyledMacroText>{proteins} g</StyledMacroText>
+                </StyledMacroInner>
+                <StyledMacroInner>
+                    <StyledMacroText>W:</StyledMacroText>
+                    <StyledMacroText>{carbons} g</StyledMacroText>
+                </StyledMacroInner>
+                <StyledMacroInner>
+                    <StyledMacroText>T:</StyledMacroText>
+                    <StyledMacroText>{fats} g</StyledMacroText>
+                </StyledMacroInner>
+            </StyledMacroWrapper>
             <StyledCardContent>
                 <StyledCardTitle>{title}</StyledCardTitle>
                 <Paragraph dangerouslySetInnerHTML={{__html: desc}}></Paragraph>
                 {viewing && 
                     <>
                         <StyledCardSubtitle>Składniki:</StyledCardSubtitle>
-                        <ul>
+                        <StyledUnorderedList>
                             {ingredients.map((ingredient, index) => (
-                                <li key={index}>{ingredient}</li>
+                                <StyledListItem key={index}>{ingredient}</StyledListItem>
                             ))}
-                        </ul>
+                        </StyledUnorderedList>
                         <StyledCardSubtitle>Kroki:</StyledCardSubtitle>
-                        <ol>
+                        <StyledOrderedList>
                             {steps.map((step, index) => (
-                                <li key={index}>{step}</li>
+                                <StyledListItem key={index}>{step}</StyledListItem>
                             ))}
-                        </ol>
+                        </StyledOrderedList>
                     </>
                 }
                 <StyledButtonGroup>
-                    <Button marginZero onClick={() => handleView(id)}>Rozwiń</Button>
-                    <Button remove>Usuń</Button>
+                    <Button marginZero onClick={() => handleView(id)}>Zobacz {viewing ? 'mniej' : 'więcej'}</Button>
                 </StyledButtonGroup>
             </StyledCardContent>
         </StyledCardWrapper>

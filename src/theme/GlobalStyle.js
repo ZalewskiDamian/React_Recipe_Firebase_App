@@ -23,6 +23,20 @@ const GlobalStyle = createGlobalStyle`
         text-decoration: none;
     }
 
+    ul, ol {
+        margin: 0;
+        padding: 0;
+    }
+
+    img {
+        display: block;
+        height: auto;
+    }
+
+    ul {
+        list-style: none;
+    }
+
     .activeLink {
         background-color: #6fb958;
     }

@@ -174,9 +174,9 @@ const Home = () => {
 				</StyledFormGroup>
 				<Button>Oblicz</Button>
 				<Paragraph bold marginTop>Twoje całkowite dzienne zapotrzebowanie:</Paragraph>
-				<Paragraph>
-					{demand ? demand + ' kcal' : ''} 
-				</Paragraph>
+				{demand !== 0 &&
+					<Paragraph>{demand} kcal</Paragraph>
+				}
 				{demand !== 0 && 
 				<StyledMacroTable>
 					<StyledMacroCell>
@@ -190,7 +190,7 @@ const Home = () => {
 					</StyledMacroCell>
 				</StyledMacroTable>
 				}
-				<Paragraph>Jeśli chcesz zachować wagę nie wybieraj nic</Paragraph>
+				<Paragraph marginTop>Jeśli chcesz zachować wagę nie wybieraj nic</Paragraph>
 				<StyledButtonGroup>
 					<Button 
 						type='button'

@@ -1,4 +1,4 @@
-import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/images/logo.svg';
@@ -86,7 +86,7 @@ const StyledAvatar = styled.img`
 `;
 
 const Sidebar = () => {
-    console.log('sidebar');
+    const { weight, demand, proteins, proteinsKcal, carbons, carbonsKcal, fats, fatsKcal } = useSelector((state) => state.user);
     return ( 
         <StyledSidebar>
             <StyledLogo src={logo} alt='logo' />
@@ -103,23 +103,29 @@ const Sidebar = () => {
                         </StyledLinkItem>
                 )})}
             </StyledLinkList>
-            {/* <StyledUserPanelWrapper>
+            <StyledUserPanelWrapper>
                 <StyledAvatar src={avatar} alt='avatar' />
                 <StyledUserPannelInner>
                     <StyledUserText>Waga:</StyledUserText>
-                    <StyledUserText>{user.weight} kg</StyledUserText>
+                    <StyledUserText>{weight} kg</StyledUserText>
                 </StyledUserPannelInner>
                 <StyledUserPannelInner>
                     <StyledUserText>Utrzymanie wagi:</StyledUserText>
                     <StyledUserText>{demand} kcal</StyledUserText>
                 </StyledUserPannelInner>
-                {totalDemand  && 
-                    <StyledUserPannelInner>
-                    <StyledUserText>{toggle === 'lose' ? 'Redukcja' : 'Zwiększenie'} wagi:</StyledUserText>
-                    <StyledUserText>{totalDemand} kcal</StyledUserText>
+                <StyledUserPannelInner>
+                    <StyledUserText>B:</StyledUserText>
+                    <StyledUserText>{proteins} g ({proteinsKcal} kcal)</StyledUserText>
                 </StyledUserPannelInner>
-                }
-            </StyledUserPanelWrapper> */}
+                <StyledUserPannelInner>
+                    <StyledUserText>W:</StyledUserText>
+                    <StyledUserText>{carbons} g ({carbonsKcal} kcal)</StyledUserText>
+                </StyledUserPannelInner>
+                <StyledUserPannelInner>
+                    <StyledUserText>T:</StyledUserText>
+                    <StyledUserText>{fats} g ({fatsKcal} kcal)</StyledUserText>
+                </StyledUserPannelInner>
+            </StyledUserPanelWrapper>
         </StyledSidebar>
     )
 }

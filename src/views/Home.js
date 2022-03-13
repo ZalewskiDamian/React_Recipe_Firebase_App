@@ -1,6 +1,6 @@
-import React, {useState, useContext} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSex, setWeight, setActivity, setDemand, setDietType, setTotalDemand, setCalories } from '../redux/userSlice';
 import styled from 'styled-components';
-import { CaloriesContext } from '../context';
 import Button from '../components/Button/Button';
 import Paragraph from '../components/Paragraph/Paragraph';
 
@@ -10,7 +10,7 @@ const StyledWrapper = styled.div`
 `;
 const StyledForm = styled.form`
     width: 100%;
-	max-width: 40rem;
+	max-width: 50rem;
 	border: 1px solid ${({theme}) => theme.colors.gray};
 	padding: 2.5rem 1.5rem;
 	margin: 0 auto 3rem;
@@ -75,42 +75,29 @@ const StyledCell = styled.div`
 		border-right: 1px solid ${({theme}) => theme.colors.grayDark};
 	}
 `;
+const StyledMacroTable = styled.div`
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	border: 1px solid ${({theme}) => theme.colors.grayDark};
+`;
+const StyledMacroCell = styled.div`
+	font-size: ${({theme}) => theme.font.userText};
+	font-weight: ${({theme}) => theme.weight.semiBold};
+`;
 
 const Home = () => {
-	const [sex, setSex] = useState('');
-	const [weight, setWeight] = useState('');
-	const [activity, setActivity] = useState(1.2);
-	const {demand, setDemand, totalDemand, setTotalDemand, toggle, setToggle, loseCalories, setLoseCalories, gainCalories, setGainCalories, setUser} = useContext(CaloriesContext);
+	const { sex, weight, activity, demand, dietType, totalDemand, proteins, proteinsKcal, fats, fatsKcal, carbons, carbonsKcal } = useSelector((state) => state.user);
+	const dispatch = useDispatch();
 	
-
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		if (sex === 'woman') {
-			setDemand(Math.round(.9*(weight * 24 * activity)) * 1) 
-		} else {
-			setDemand(Math.round(weight * 24 * activity) * 1)
-		}
-
-		const newUser = {
-			sex: sex,
-			weight: weight,
-			activity: activity,
-		}
-
-		setUser(newUser);
+		(sex === 'woman') ? 
+		(dispatch(setDemand(Math.round(.9*(weight * 24 * activity)) * 1))) 
+		: 
+		(dispatch(setDemand(Math.round(weight * 24 * activity) * 1)))
+		
 	}
-
-	const handleLoseWeight = (e) => {
-		e.preventDefault();
-		setTotalDemand(demand - parseInt(loseCalories))
-	}
-
-	const handleGainWeight = (e) => {
-		e.preventDefault();
-		setTotalDemand(demand + parseInt(gainCalories))
-	}
-
     return (
 		<StyledWrapper>
 			<h1>Oblicz swoje zapotrzebowanie kaloryczne</h1>
@@ -152,8 +139,7 @@ const Home = () => {
 						type='button'
 						small
 						name='men'
-						value={sex}
-						onClick={(e) => setSex(e.target.value = e.target.name)}
+						onClick={(e) => dispatch(setSex(e.target.value = e.target.name))}
 						className={sex === 'men' ? 'activeButton' : ''}
 					>
 						Mężczyzna
@@ -162,8 +148,7 @@ const Home = () => {
 						type='button'
 						name='woman'
 						small
-						value={sex}
-						onClick={(e) => setSex(e.target.value = e.target.name)}
+						onClick={(e) => dispatch(setSex(e.target.value = e.target.name))}
 						className={sex === 'woman' ? 'activeButton' : ''}
 					>
 						Kobieta
@@ -173,15 +158,13 @@ const Home = () => {
 					<StyledLabel>Waga (kg):</StyledLabel>
 					<StyledInput 
 						type='text'
-						onChange={(e) => setWeight(e.target.value)}
-						value={weight}
+						onChange={(e) => dispatch(setWeight(e.target.value))}
 					/>
 				</StyledFormGroup>
 				<StyledFormGroup>
 					<StyledLabel>Współczynnik aktywności fizycznej:</StyledLabel>
 					<StyledSelect
-						onChange={(e) => setActivity(e.target.value)}
-						value={activity}
+						onChange={(e) => dispatch(setActivity(e.target.value))}
 					>
 						<option value={1.2}>Niska aktywność</option>
 						<option value={1.35}>Średnio aktywny</option>
@@ -190,62 +173,68 @@ const Home = () => {
 					</StyledSelect>
 				</StyledFormGroup>
 				<Button>Oblicz</Button>
-				<Paragraph bold>Twoje całkowite dzienne zapotrzebowanie:</Paragraph>
+				<Paragraph bold marginTop>Twoje całkowite dzienne zapotrzebowanie:</Paragraph>
 				<Paragraph>
 					{demand ? demand + ' kcal' : ''} 
 				</Paragraph>
-			</StyledForm>
-			
-			<StyledForm>
+				{demand !== 0 && 
+				<StyledMacroTable>
+					<StyledMacroCell>
+						Białko: {proteins} g ({proteinsKcal} kcal)
+					</StyledMacroCell>
+					<StyledMacroCell>
+						Węglowodany: {carbons} g ({carbonsKcal} kcal)
+					</StyledMacroCell>
+					<StyledMacroCell>
+						Tłuszcze: {fats} g ({fatsKcal} kcal)
+					</StyledMacroCell>
+				</StyledMacroTable>
+				}
 				<Paragraph>Jeśli chcesz zachować wagę nie wybieraj nic</Paragraph>
 				<StyledButtonGroup>
 					<Button 
 						type='button'
 						name='lose'
-						value={toggle}
-						onClick={(e) => setToggle(e.target.value = e.target.name)}
-						className={toggle === 'lose' ? 'activeButton' : ''}
+						onClick={(e) => dispatch(setDietType(e.target.value = e.target.name))}
+						className={dietType === 'lose' ? 'activeButton' : ''}
 					>
 						Chcę schudnąć
 					</Button>
 					<Button 
 						type='button'
 						name='gain' 
-						value={toggle}
-						onClick={(e) => setToggle(e.target.value = e.target.name)}
-						className={toggle === 'gain' ? 'activeButton' : ''}
+						onClick={(e) => dispatch(setDietType(e.target.value = e.target.name))}
+						className={dietType === 'gain' ? 'activeButton' : ''}
 					>
 						Chcę przytyć
 					</Button>
 				</StyledButtonGroup>
-				{toggle === 'lose' && 
+				{dietType === 'lose' && 
 					<>
 						<StyledFormGroup>
 							<StyledLabel>Wpisz ile kalorii dziennie chcesz obciąć</StyledLabel>
 							<StyledInput 
 								type='text'
-								value={loseCalories}
-								onChange={(e) => setLoseCalories(e.target.value)}
+								onChange={(e) => dispatch(setCalories(e.target.value))}
 							/>
 						</StyledFormGroup>
-						<Button onClick={handleLoseWeight}>Oblicz</Button>
+						<Button type='button' onClick={() => dispatch(setTotalDemand())}>Oblicz</Button>
 					</>
 				}
-				{toggle === 'gain' &&
+				{dietType === 'gain' &&
 					<>
 						<StyledFormGroup>
 							<StyledLabel>Wpisz ile kalorii dziennie chcesz dodać</StyledLabel>
 							<StyledInput 
 								type='text'
-								value={gainCalories}  
-								onChange={(e) => setGainCalories(e.target.value)}
+								onChange={(e) => dispatch(setCalories(e.target.value))}
 							/>
 						</StyledFormGroup>
-						<Button onClick={handleGainWeight}>Oblicz</Button>
+						<Button type='button' onClick={() => dispatch(setTotalDemand())}>Oblicz</Button>
 					</>
 				}
 			</StyledForm>
-			{totalDemand !== '' && <Paragraph>Twoje zapotrzebowanie wynosi teraz: {totalDemand} kcal</Paragraph>}
+			{totalDemand !== 0 && <Paragraph>Twoje zapotrzebowanie wynosi teraz: {totalDemand} kcal</Paragraph>}
 		</StyledWrapper>
     )
 }

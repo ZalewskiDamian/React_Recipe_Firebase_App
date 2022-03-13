@@ -1,9 +1,8 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/images/logo.svg';
 import { sidebarData } from './SidebarData';
-import { CaloriesContext } from '../../context';
 import avatar from '../../assets/images/user.png';
 
 
@@ -87,7 +86,6 @@ const StyledAvatar = styled.img`
 `;
 
 const Sidebar = () => {
-    const {demand, totalDemand, user, toggle} = useContext(CaloriesContext);
     console.log('sidebar');
     return ( 
         <StyledSidebar>
@@ -105,7 +103,7 @@ const Sidebar = () => {
                         </StyledLinkItem>
                 )})}
             </StyledLinkList>
-            <StyledUserPanelWrapper>
+            {/* <StyledUserPanelWrapper>
                 <StyledAvatar src={avatar} alt='avatar' />
                 <StyledUserPannelInner>
                     <StyledUserText>Waga:</StyledUserText>
@@ -121,7 +119,7 @@ const Sidebar = () => {
                     <StyledUserText>{totalDemand} kcal</StyledUserText>
                 </StyledUserPannelInner>
                 }
-            </StyledUserPanelWrapper>
+            </StyledUserPanelWrapper> */}
         </StyledSidebar>
     )
 }

@@ -1,5 +1,4 @@
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import { CaloriesProvider } from './context';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from './theme/GlobalStyle';
 import { theme } from './theme/mainTheme';
@@ -12,16 +11,14 @@ import Sidebar from './components/Sidebar/Sidebar';
 const App = () => (
     <HashRouter>
         <ThemeProvider theme={theme}>
-            <CaloriesProvider>
-                <GlobalStyle />
-                <Sidebar />
-                <Routes>
-                    <Route path='/' element={ <Home /> } />
-                    <Route path='/breakfasts' element={ <Breakfasts /> } />
-                    <Route path='/lunches' element={ <Lunches /> } />
-                    <Route path='/dinners' element={ <Dinners /> } />
-                </Routes>
-            </CaloriesProvider>
+            <GlobalStyle />
+            <Sidebar />
+            <Routes>
+                <Route path='/' element={ <Home /> } />
+                <Route path='/breakfasts' element={ <Breakfasts /> } />
+                <Route path='/lunches' element={ <Lunches /> } />
+                <Route path='/dinners' element={ <Dinners /> } />
+            </Routes>
         </ThemeProvider>
     </HashRouter>
 );

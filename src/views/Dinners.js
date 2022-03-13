@@ -8,7 +8,7 @@ const Dinners = () => {
     console.log('dinners');
     const [dinners, setDinners] = useState([]);
 
-    const dinnersCollectionRef = collection(db, "recipes");
+    const dinnersCollectionRef = collection(db, "dinners");
 
     useEffect(() => {
         onSnapshot(dinnersCollectionRef, snapshot => {

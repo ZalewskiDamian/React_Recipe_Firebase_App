@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { device } from '../device';
 
 const GlobalStyle = createGlobalStyle`
     *, *::before, *::after {
@@ -12,10 +13,14 @@ const GlobalStyle = createGlobalStyle`
     }
     
     body {
-        padding: 0 0 0 270px;
+        padding: 0;
         margin: 0;
         font-size: 1.6rem;
         font-family: "Montserrat", sans-serif;
+
+        @media ${device.tablet} {
+            padding: 0 0 0 270px; 
+        }
     }
 
     a {

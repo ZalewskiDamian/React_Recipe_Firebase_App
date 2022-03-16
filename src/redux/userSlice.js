@@ -46,7 +46,7 @@ export const userSlice = createSlice({
             state.calories = action.payload
         },
         setTotalDemand: (state) => {
-            state.calories !== 0 && state.dietType === 'lose' ?
+            state.dietType === 'lose' ?
             (state.totalDemand = state.demand - parseInt(state.calories)) :
             (state.totalDemand = state.demand + parseInt(state.calories))
         }

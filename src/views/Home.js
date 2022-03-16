@@ -1,12 +1,17 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { setSex, setWeight, setActivity, setDemand, setDietType, setTotalDemand, setCalories } from '../redux/userSlice';
+import { device } from '../device';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
 import Paragraph from '../components/Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
-    padding: 25px 150px 25px 70px;
+    padding: 10rem 1rem 9rem;
     text-align: center;
+
+	@media ${device.tablet} {
+		padding: 2.5rem 4rem;
+	}
 `;
 const StyledForm = styled.form`
     width: 100%;
@@ -75,18 +80,9 @@ const StyledCell = styled.div`
 		border-right: 1px solid ${({theme}) => theme.colors.grayDark};
 	}
 `;
-const StyledMacroTable = styled.div`
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	border: 1px solid ${({theme}) => theme.colors.grayDark};
-`;
-const StyledMacroCell = styled.div`
-	font-size: ${({theme}) => theme.font.userText};
-	font-weight: ${({theme}) => theme.weight.semiBold};
-`;
 
 const Home = () => {
-	const { sex, weight, activity, demand, dietType, totalDemand, proteins, proteinsKcal, fats, fatsKcal, carbons, carbonsKcal } = useSelector((state) => state.user);
+	const { sex, weight, activity, demand, dietType, totalDemand } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	
 	const handleSubmit = e => {
@@ -174,22 +170,7 @@ const Home = () => {
 				</StyledFormGroup>
 				<Button>Oblicz</Button>
 				<Paragraph bold marginTop>Twoje całkowite dzienne zapotrzebowanie:</Paragraph>
-				{demand !== 0 &&
-					<Paragraph>{demand} kcal</Paragraph>
-				}
-				{demand !== 0 && 
-				<StyledMacroTable>
-					<StyledMacroCell>
-						Białko: {proteins} g ({proteinsKcal} kcal)
-					</StyledMacroCell>
-					<StyledMacroCell>
-						Węglowodany: {carbons} g ({carbonsKcal} kcal)
-					</StyledMacroCell>
-					<StyledMacroCell>
-						Tłuszcze: {fats} g ({fatsKcal} kcal)
-					</StyledMacroCell>
-				</StyledMacroTable>
-				}
+				{demand !== 0 && <Paragraph>{demand} kcal</Paragraph>}
 				<Paragraph marginTop>Jeśli chcesz zachować wagę nie wybieraj nic</Paragraph>
 				<StyledButtonGroup>
 					<Button 

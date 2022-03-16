@@ -1,7 +1,13 @@
 import styled from 'styled-components';
+import { device } from '../device';
 
 const StyledWrapper = styled.div`
-    padding: 25px 150px 25px 70px;
+    padding: 10rem 1rem 9rem;
+    text-align: center;
+
+	@media ${device.tablet} {
+		padding: 2.5rem 4rem;
+	}
 `;
 const StyledGrid = styled.div`
     display: grid;

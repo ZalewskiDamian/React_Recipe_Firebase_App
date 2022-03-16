@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { device } from '../../device';
 
 const Button = styled.button`
     width: ${({small}) => small ? '120px' : 'auto'};
-    font-size: ${({theme}) => theme.font.button};
+    font-size: ${({theme}) => theme.font.paragraph};
     font-weight: ${({theme}) => theme.weight.regular};
     background-color: ${({theme, remove}) => remove ? theme.colors.red : theme.colors.blueLight};
     color: white;
@@ -13,6 +14,9 @@ const Button = styled.button`
     cursor: pointer;
     transition: all .3s ease-in-out;
 
+    @media ${device.tablet} {
+        font-size: ${({theme}) => theme.font.button};
+    }
     &:hover {
         box-shadow: 0 3px 6px rgba(0,0,0, .16);
     }

@@ -4,10 +4,13 @@ import { collection, onSnapshot, addDoc } from 'firebase/firestore';
 import Popup from '../components/Popup/Popup';
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/Card/Card';
+import { useDispatch } from 'react-redux';
+import { setNutrions } from '../redux/userSlice';
 
 const Breakfasts = () => {
     console.log('breakfafst')
     const [breakfasts, setBreakfasts] = useState([]);
+    const dispatch = useDispatch();
     // const [form, setForm] = useState({
     //     title: '',
     //     desc: '',
@@ -42,6 +45,14 @@ const Breakfasts = () => {
         })
 
         setBreakfasts(breakfastsClone)
+    }
+
+    const handleNutrions = (id, proteins, carbons, fats) => {
+        const breakfastsClone = [...breakfasts];
+
+        breakfastsClone.forEach(breakfast => {
+            breakfast.id === id && dispatch(setNutrions({proteins, carbons, fats}))
+        })
     }
 
     // const handleSubmit = e => {
@@ -124,6 +135,7 @@ const Breakfasts = () => {
                     steps={recipe.steps}
                     id={recipe.id}
                     handleView={handleView}
+                    handleNutrions={handleNutrions}
                 />
             ))}
             {/* <Popup 

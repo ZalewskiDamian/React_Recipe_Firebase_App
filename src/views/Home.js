@@ -82,7 +82,7 @@ const StyledCell = styled.div`
 `;
 
 const Home = () => {
-	const { sex, weight, activity, demand, dietType, totalDemand } = useSelector((state) => state.user);
+	const { sex, weight, activity, demand, dietType } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 	
 	const handleSubmit = e => {
@@ -215,7 +215,6 @@ const Home = () => {
 					</>
 				}
 			</StyledForm>
-			{totalDemand !== 0 && <Paragraph>Twoje zapotrzebowanie wynosi teraz: {totalDemand} kcal</Paragraph>}
 		</StyledWrapper>
     )
 }

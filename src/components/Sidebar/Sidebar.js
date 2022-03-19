@@ -151,12 +151,19 @@ const StyledUserPannelRow = styled.div`
     align-items: center;
     width: 100%;
 `;
-const StyledProgressBar = styled.div`
+const StyledProgressBarWrapper = styled.div`
     width: 100%;
     height: 1rem;
     border-radius: .4rem;
     background-color: ${({theme}) => theme.colors.blueDark};
     margin-bottom: .5rem;
+    overflow: hidden;
+`;
+const StyledProgressBar = styled.div`
+    background-color: ${({theme}) => theme.colors.white};
+    height: 1rem;
+    width: ${({length, progress}) => progress ? Math.round((progress / length) * 100) : 0 }%;
+    transition: .2s ease-in;
 `;
 const StyledUserText = styled.span`
     font-size: ${({theme}) => theme.font.userTextMobile};
@@ -170,7 +177,7 @@ const StyledUserText = styled.span`
 
 const Sidebar = () => {
     const [isActive, setIsActive] = useState(false);
-    const { demand, dietType, totalDemand, proteins, carbons, fats } = useSelector((state) => state.user);
+    const { demand, proteins, carbons, fats, nutrions } = useSelector((state) => state.user);
     return ( 
         <StyledSidebar>
             <StyledSidebarHeader>
@@ -196,7 +203,7 @@ const Sidebar = () => {
             </StyledLinkList>
             <StyledUserPanelWrapper>
                 <StyledUserPannelInner>
-                    <StyledProgressBar></StyledProgressBar>
+                    <StyledProgressBarWrapper></StyledProgressBarWrapper>
                     <StyledUserPannelRow>
                         <StyledUserText>Kcal:</StyledUserText>
                         <StyledUserText>0 kcal</StyledUserText>
@@ -208,17 +215,13 @@ const Sidebar = () => {
                     </StyledUserPannelRow>
                     }
                 </StyledUserPannelInner>
-                {totalDemand !== 0 &&
-                    <StyledUserPannelInner>
-                        <StyledUserText>{dietType === 'lose' ? 'Redukcja' : 'Zwiększenie'} wagi:</StyledUserText>
-                        <StyledUserText>{totalDemand} kcal</StyledUserText>
-                    </StyledUserPannelInner>
-                }
                 <StyledUserPannelInner>
-                    <StyledProgressBar></StyledProgressBar>
+                    <StyledProgressBarWrapper>
+                        <StyledProgressBar length={proteins} progress={nutrions.proteins}></StyledProgressBar>
+                    </StyledProgressBarWrapper>
                     <StyledUserPannelRow>
                         <StyledUserText>B:</StyledUserText>
-                        <StyledUserText>0 g</StyledUserText>
+                        <StyledUserText>{nutrions.proteins} g</StyledUserText>
                     </StyledUserPannelRow>
                     {demand !== 0 &&
                     <StyledUserPannelRow>
@@ -228,10 +231,12 @@ const Sidebar = () => {
                     }
                 </StyledUserPannelInner>
                 <StyledUserPannelInner>
-                    <StyledProgressBar></StyledProgressBar>
+                    <StyledProgressBarWrapper>
+                        <StyledProgressBar length={carbons} progress={nutrions.carbons}></StyledProgressBar>
+                    </StyledProgressBarWrapper>
                     <StyledUserPannelRow>
                         <StyledUserText>W:</StyledUserText>
-                        <StyledUserText>0 g</StyledUserText>
+                        <StyledUserText>{nutrions.carbons} g</StyledUserText>
                     </StyledUserPannelRow>
                     {demand !== 0 &&
                     <StyledUserPannelRow>
@@ -241,10 +246,12 @@ const Sidebar = () => {
                     }
                 </StyledUserPannelInner>
                 <StyledUserPannelInner>
-                    <StyledProgressBar></StyledProgressBar>
+                    <StyledProgressBarWrapper>
+                        <StyledProgressBar length={fats} progress={nutrions.fats}></StyledProgressBar>
+                    </StyledProgressBarWrapper>
                     <StyledUserPannelRow>
                         <StyledUserText>T:</StyledUserText>
-                        <StyledUserText>0 g</StyledUserText>
+                        <StyledUserText>{nutrions.fats} g</StyledUserText>
                     </StyledUserPannelRow>
                     {demand !== 0 &&
                     <StyledUserPannelRow>

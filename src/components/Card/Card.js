@@ -81,7 +81,7 @@ const StyledIcon = styled.img`
     width: 2.4rem;
 `;
 
-const Card = ({title, time, desc, proteins, carbons, fats, weight, viewing, image, ingredients, steps, id, handleView}) => {
+const Card = ({title, time, desc, proteins, carbons, fats, weight, viewing, image, ingredients, steps, id, handleView, handleNutrions}) => {
     return (
         <StyledCardWrapper>
             <StyledCardImageWrapper>
@@ -130,6 +130,7 @@ const Card = ({title, time, desc, proteins, carbons, fats, weight, viewing, imag
                 }
                 <StyledButtonGroup>
                     <Button marginZero onClick={() => handleView(id)}>Zobacz {viewing ? 'mniej' : 'więcej'}</Button>
+                    <Button onClick={() => handleNutrions(id, proteins, carbons, fats)}>Dodaj posiłek</Button>
                 </StyledButtonGroup>
             </StyledCardContent>
         </StyledCardWrapper>

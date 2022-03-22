@@ -14,6 +14,7 @@ const initialState = {
     dietType: 'normal',
     calories: 0,
     nutrions: {
+        kcal: 0,
         proteins: 0,
         carbons: 0,
         fats: 0,
@@ -54,7 +55,11 @@ export const userSlice = createSlice({
             (state.demand += parseInt(state.calories))
         },
         setNutrions: (state, action) => { 
-            state.nutrions = action.payload
+            const {kcal, proteins, fats, carbons} = action.payload;
+            state.nutrions.kcal += kcal
+            state.nutrions.proteins += proteins
+            state.nutrions.carbons += carbons
+            state.nutrions.fats += fats        
         }
     },
 });

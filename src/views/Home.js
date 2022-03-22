@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSex, setWeight, setActivity, setDemand, setDietType, setTotalDemand, setCalories } from '../redux/userSlice';
+import { setSex, setWeight, setActivity, setDemand, setDietType, setTotalDemand, setCalories } from '../redux/userReducer';
 import { device } from '../device';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
@@ -80,15 +81,27 @@ const StyledCell = styled.div`
 		border-right: 1px solid ${({theme}) => theme.colors.grayDark};
 	}
 `;
+const StyledError = styled.p`
+	color: ${({theme}) => theme.colors.red};
+	margin: 0;
+	font-size: ${({theme}) => theme.font.userText};
+`;
 
 const Home = () => {
 	const { sex, weight, activity, demand, dietType } = useSelector((state) => state.user);
+	const [error, setError] = useState(false);
 	const dispatch = useDispatch();
 	
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		(sex === 'woman') ? 
+		if (weight !== 0 ) {
+			setError(false)
+		} else {
+			setError(true)
+		}
+
+		(sex === 'woman' && !error) ? 
 		(dispatch(setDemand(Math.round(.9*(weight * 24 * activity)) * 1))) 
 		: 
 		(dispatch(setDemand(Math.round(weight * 24 * activity) * 1)))
@@ -156,6 +169,7 @@ const Home = () => {
 						type='text'
 						onChange={(e) => dispatch(setWeight(e.target.value))}
 					/>
+					{error && <StyledError>Uzupełnij wagę</StyledError>}
 				</StyledFormGroup>
 				<StyledFormGroup>
 					<StyledLabel>Współczynnik aktywności fizycznej:</StyledLabel>

@@ -5,7 +5,7 @@ import Popup from '../components/Popup/Popup';
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/Card/Card';
 import { useDispatch } from 'react-redux';
-import { setNutrions } from '../redux/userSlice';
+import { setNutrions } from '../redux/userReducer';
 
 const Breakfasts = () => {
     console.log('breakfafst')
@@ -47,11 +47,11 @@ const Breakfasts = () => {
         setBreakfasts(breakfastsClone)
     }
 
-    const handleNutrions = (id, proteins, carbons, fats) => {
+    const handleNutrions = (id, kcal, proteins, carbons, fats) => {
         const breakfastsClone = [...breakfasts];
 
         breakfastsClone.forEach(breakfast => {
-            breakfast.id === id && dispatch(setNutrions({proteins, carbons, fats}))
+            breakfast.id === id && dispatch(setNutrions({kcal, proteins, carbons, fats}))
         })
     }
 
@@ -119,21 +119,22 @@ const Breakfasts = () => {
     return (
         <GridTemplate>
             {/* <button onClick={() => setPopupActive(!popupActive)}>Add recipe</button> */}
-            {breakfasts.map((recipe) => (
+            {breakfasts.map((breakfast) => (
                 <Card 
-                    key={recipe.id}
-                    image={recipe.image}
-                    time={recipe.time}
-                    weight={recipe.weight}
-                    proteins={recipe.proteins}
-                    carbons={recipe.carbons}
-                    fats={recipe.fats}
-                    title={recipe.title}
-                    desc={recipe.desc}
-                    viewing={recipe.viewing}
-                    ingredients={recipe.ingredients}
-                    steps={recipe.steps}
-                    id={recipe.id}
+                    key={breakfast.id}
+                    image={breakfast.image}
+                    time={breakfast.time}
+                    kcal={breakfast.kcal}
+                    weight={breakfast.weight}
+                    proteins={breakfast.proteins}
+                    carbons={breakfast.carbons}
+                    fats={breakfast.fats}
+                    title={breakfast.title}
+                    desc={breakfast.desc}
+                    viewing={breakfast.viewing}
+                    ingredients={breakfast.ingredients}
+                    steps={breakfast.steps}
+                    id={breakfast.id}
                     handleView={handleView}
                     handleNutrions={handleNutrions}
                 />

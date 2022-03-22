@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import logo from '../../assets/images/logo.svg';
 import { sidebarData } from './SidebarData';
 import hamburger from '../../assets/images/hamburger.png';
+import close from '../../assets/images/close.png';
 import {device} from '../../device';
 
 
@@ -40,8 +41,11 @@ const StyledSidebarHeader = styled.div`
         justify-content: center;
     }
 `;
-const StyledHamburger = styled.img`
+const StyledNavButton = styled.div`
     width: 32px;
+    height: 32px;
+    background-image: url(${({isActive}) => (isActive ? close : hamburger)});
+    background-size: 100% 100%;
 
     @media ${device.tablet} {
         display: none;
@@ -160,9 +164,12 @@ const StyledProgressBarWrapper = styled.div`
     overflow: hidden;
 `;
 const StyledProgressBar = styled.div`
-    background-color: ${({theme}) => theme.colors.white};
+    background-color: ${({theme, progress, length}) => progress >= length ? theme.colors.red : theme.colors.white};
     height: 1rem;
+    border-top-right-radius: .4rem;
+    border-bottom-right-radius: .4rem;
     width: ${({length, progress}) => progress ? Math.round((progress / length) * 100) : 0 }%;
+    max-width: 100%;
     transition: .2s ease-in;
 `;
 const StyledUserText = styled.span`
@@ -182,10 +189,9 @@ const Sidebar = () => {
         <StyledSidebar>
             <StyledSidebarHeader>
                 <StyledLogo src={logo} alt='logo' />
-                <StyledHamburger 
-                    src={hamburger} 
-                    alt='hamburger'
-                    onClick={() => setIsActive(!isActive)} 
+                <StyledNavButton 
+                    onClick={() => setIsActive(!isActive)}
+                    isActive={isActive}
                 />
             </StyledSidebarHeader>
             <StyledLinkList isActive={isActive}>
@@ -203,17 +209,17 @@ const Sidebar = () => {
             </StyledLinkList>
             <StyledUserPanelWrapper>
                 <StyledUserPannelInner>
-                    <StyledProgressBarWrapper></StyledProgressBarWrapper>
+                    <StyledProgressBarWrapper>
+                        <StyledProgressBar length={demand} progress={nutrions.kcal}></StyledProgressBar>
+                    </StyledProgressBarWrapper>
                     <StyledUserPannelRow>
                         <StyledUserText>Kcal:</StyledUserText>
-                        <StyledUserText>0 kcal</StyledUserText>
+                        <StyledUserText>{nutrions.kcal} kcal</StyledUserText>
                     </StyledUserPannelRow>
-                    {demand !== 0 &&
                     <StyledUserPannelRow>
                         <StyledUserText>cel:</StyledUserText>
                         <StyledUserText>{demand} kcal</StyledUserText>
                     </StyledUserPannelRow>
-                    }
                 </StyledUserPannelInner>
                 <StyledUserPannelInner>
                     <StyledProgressBarWrapper>
@@ -223,12 +229,10 @@ const Sidebar = () => {
                         <StyledUserText>B:</StyledUserText>
                         <StyledUserText>{nutrions.proteins} g</StyledUserText>
                     </StyledUserPannelRow>
-                    {demand !== 0 &&
                     <StyledUserPannelRow>
                         <StyledUserText>cel:</StyledUserText>
                         <StyledUserText>{proteins} g</StyledUserText>
                     </StyledUserPannelRow>
-                    }
                 </StyledUserPannelInner>
                 <StyledUserPannelInner>
                     <StyledProgressBarWrapper>
@@ -238,12 +242,10 @@ const Sidebar = () => {
                         <StyledUserText>W:</StyledUserText>
                         <StyledUserText>{nutrions.carbons} g</StyledUserText>
                     </StyledUserPannelRow>
-                    {demand !== 0 &&
                     <StyledUserPannelRow>
                         <StyledUserText>cel:</StyledUserText>
                         <StyledUserText>{carbons} g</StyledUserText>
                     </StyledUserPannelRow>
-                    }
                 </StyledUserPannelInner>
                 <StyledUserPannelInner>
                     <StyledProgressBarWrapper>
@@ -253,12 +255,10 @@ const Sidebar = () => {
                         <StyledUserText>T:</StyledUserText>
                         <StyledUserText>{nutrions.fats} g</StyledUserText>
                     </StyledUserPannelRow>
-                    {demand !== 0 &&
                     <StyledUserPannelRow>
                         <StyledUserText>cel:</StyledUserText>
                         <StyledUserText>{fats} g</StyledUserText>
                     </StyledUserPannelRow>
-                    }
                 </StyledUserPannelInner>
             </StyledUserPanelWrapper>
         </StyledSidebar>

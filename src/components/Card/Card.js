@@ -54,18 +54,19 @@ const StyledListItem = styled.li`
 const StyledMacroWrapper = styled.div`
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: flex-start;
     align-items: center;
     padding: 1rem 1rem 0 1rem;
 `;
 const StyledMacroInner = styled.div`
-    display: grid;
-    grid-template-columns: 2.4rem 1fr;
-    grid-gap: .5rem;
+    display: flex;
+    width: ${({big}) => big ? '9.5rem' : '8rem'};
+    justify-content: space-between;
     align-items: center;
     padding: .5rem;
     border: 1px solid ${({theme}) => theme.colors.grayDark};
     border-radius: .6rem;
+    margin: 0.5rem;
 `;
 const StyledMacroText = styled.span`
     font-size: ${({theme}) => theme.font.paragraph};
@@ -77,24 +78,34 @@ const StyledTimeInner = styled(StyledMacroInner)`
     bottom: 1rem;
     background-color: #fff;
 `;
+const StyledWeightInner = styled(StyledMacroInner)`
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    background-color: #fff;
+`;
 const StyledIcon = styled.img`
-    width: 2.4rem;
+    width: 1.8rem;
 `;
 
-const Card = ({title, time, desc, proteins, carbons, fats, weight, viewing, image, ingredients, steps, id, handleView, handleNutrions}) => {
+const Card = ({title, time, desc, proteins, carbons, fats, weight, kcal, viewing, image, ingredients, steps, id, handleView, handleNutrions}) => {
     return (
         <StyledCardWrapper>
             <StyledCardImageWrapper>
                 <StyledCardImage src={image} alt='title' />
-                <StyledTimeInner>
+                <StyledTimeInner big>
                     <StyledIcon src={timer} alt='timer' />
                     <StyledMacroText>{time} min</StyledMacroText>
                 </StyledTimeInner>
-            </StyledCardImageWrapper>
-            <StyledMacroWrapper>
-                <StyledMacroInner>
+                <StyledWeightInner big>
                     <StyledIcon src={scale} alt='scale' />
                     <StyledMacroText>{weight} g</StyledMacroText>
+                </StyledWeightInner>
+            </StyledCardImageWrapper>
+            <StyledMacroWrapper>
+                <StyledMacroInner big>
+                <StyledMacroText>Kcal:</StyledMacroText>
+                    <StyledMacroText>{kcal}</StyledMacroText>
                 </StyledMacroInner>
                 <StyledMacroInner>
                     <StyledMacroText>B:</StyledMacroText>
@@ -130,7 +141,7 @@ const Card = ({title, time, desc, proteins, carbons, fats, weight, viewing, imag
                 }
                 <StyledButtonGroup>
                     <Button marginZero onClick={() => handleView(id)}>Zobacz {viewing ? 'mniej' : 'więcej'}</Button>
-                    <Button onClick={() => handleNutrions(id, proteins, carbons, fats)}>Dodaj posiłek</Button>
+                    <Button onClick={() => handleNutrions(id, kcal, proteins, carbons, fats)}>Dodaj posiłek</Button>
                 </StyledButtonGroup>
             </StyledCardContent>
         </StyledCardWrapper>

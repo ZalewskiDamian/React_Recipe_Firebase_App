@@ -7,6 +7,7 @@ import Home from './views/Home';
 import Dinners from './views/Dinners';
 import Lunches from './views/Lunches';
 import Sidebar from './components/Sidebar/Sidebar';
+import Dietplan from './views/Dietplan';
 
 const App = () => (
     <HashRouter>
@@ -15,6 +16,7 @@ const App = () => (
             <Sidebar />
             <Routes>
                 <Route path='/' element={ <Home /> } />
+                <Route path='/dietplan' element={ <Dietplan /> } />
                 <Route path='/breakfasts' element={ <Breakfasts /> } />
                 <Route path='/lunches' element={ <Lunches /> } />
                 <Route path='/dinners' element={ <Dinners /> } />

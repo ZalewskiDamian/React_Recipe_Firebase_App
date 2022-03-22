@@ -10,6 +10,11 @@ export const sidebarData = [
         link: '/'
     },
     {
+        title: 'Plan diety',
+        icon: home,
+        link: '/dietplan'
+    },
+    {
         title: 'Śniadania',
         icon: breakfasts,
         link: '/breakfasts'

@@ -48,6 +48,9 @@ const GlobalStyle = createGlobalStyle`
     .activeButton {
         background-color: #6941c6;
     }
+    .DayPicker {
+        font-size: 1.6rem;
+    }
 `;
 
 export default GlobalStyle;

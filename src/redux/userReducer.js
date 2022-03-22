@@ -6,11 +6,8 @@ const initialState = {
     activity: 1.2,
     demand: 0,
     proteins: 0,
-    proteinsKcal: 0,
     fats: 0,
-    fatsKcal: 0,
     carbons: 0,
-    carbonsKcal: 0,
     dietType: 'normal',
     calories: 0,
     nutrions: {
@@ -37,10 +34,7 @@ export const userSlice = createSlice({
         setDemand: (state, action) => {
             state.demand = action.payload
             state.proteins = (Math.round(state.weight * 1.8) * 1)
-            state.proteinsKcal = (Math.round(state.proteins * 4) * 1)
             state.fats = (Math.round(state.weight * 1.2) * 1)
-            state.fatsKcal = (Math.round(state.fats * 9) * 1)
-            state.carbonsKcal = state.demand - (state.proteinsKcal + state.fatsKcal)
             state.carbons = (Math.round(state.carbonsKcal / 4) * 1)
         },
         setDietType: (state, action) => {

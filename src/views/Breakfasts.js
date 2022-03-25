@@ -5,7 +5,7 @@ import Popup from '../components/Popup/Popup';
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/Card/Card';
 import { useDispatch } from 'react-redux';
-import { setNutrions } from '../redux/userReducer';
+import { addRecipe } from '../redux/recipeReducer';
 
 const Breakfasts = () => {
     console.log('breakfafst')
@@ -47,13 +47,26 @@ const Breakfasts = () => {
         setBreakfasts(breakfastsClone)
     }
 
-    const handleNutrions = (id, kcal, proteins, carbons, fats) => {
-        const breakfastsClone = [...breakfasts];
+    const handleRecipe = (id, title, kcal, proteins, carbons, fats) => {
+        const newRecipe = {
+            id: id,
+            title: title,
+            kcal: kcal,
+            proteins: proteins,
+            carbons: carbons,
+            fats: fats, 
+        }
 
-        breakfastsClone.forEach(breakfast => {
-            breakfast.id === id && dispatch(setNutrions({kcal, proteins, carbons, fats}))
-        })
+        dispatch(addRecipe(newRecipe));
     }
+
+    // const handleNutrions = (id, title, kcal, proteins, carbons, fats) => {
+    //     const breakfastsClone = [...breakfasts];
+
+    //     breakfastsClone.forEach(breakfast => {
+    //         breakfast.id === id && dispatch(selectRecipe({id, title, kcal, proteins, carbons, fats}))
+    //     })
+    // }
 
     // const handleSubmit = e => {
     //     e.preventDefault();
@@ -136,7 +149,7 @@ const Breakfasts = () => {
                     steps={breakfast.steps}
                     id={breakfast.id}
                     handleView={handleView}
-                    handleNutrions={handleNutrions}
+                    handleRecipe={handleRecipe}
                 />
             ))}
             {/* <Popup 

@@ -184,7 +184,22 @@ const StyledUserText = styled.span`
 
 const Sidebar = () => {
     const [isActive, setIsActive] = useState(false);
-    const { demand, proteins, carbons, fats, nutrions } = useSelector((state) => state.user);
+    const { demand, proteins, carbons, fats } = useSelector((state) => state.user);
+    const { recipes } = useSelector((state) => state.recipes);
+    let dailyUserKcal = 0;
+    let dailyUserProteins = 0;
+    let dailyUserCarbons = 0;
+    let dailyUserFats = 0;
+    
+    if (recipes.length > 0) {
+        recipes.forEach((recip) => {
+            dailyUserKcal += recip.kcal;
+            dailyUserProteins += recip.proteins;
+            dailyUserCarbons += recip.carbons;
+            dailyUserFats += recip.fats;
+        })
+    }
+    
     return ( 
         <StyledSidebar>
             <StyledSidebarHeader>
@@ -205,16 +220,17 @@ const Sidebar = () => {
                                 </StyledLinkInner>
                             </NavLink>
                         </StyledLinkItem>
-                )})}
+                    )
+                })}
             </StyledLinkList>
             <StyledUserPanelWrapper>
                 <StyledUserPannelInner>
                     <StyledProgressBarWrapper>
-                        <StyledProgressBar length={demand} progress={nutrions.kcal}></StyledProgressBar>
+                        <StyledProgressBar length={demand} progress={dailyUserKcal}></StyledProgressBar>
                     </StyledProgressBarWrapper>
                     <StyledUserPannelRow>
                         <StyledUserText>Kcal:</StyledUserText>
-                        <StyledUserText>{nutrions.kcal} kcal</StyledUserText>
+                        <StyledUserText>{dailyUserKcal} kcal</StyledUserText>
                     </StyledUserPannelRow>
                     <StyledUserPannelRow>
                         <StyledUserText>cel:</StyledUserText>
@@ -223,11 +239,11 @@ const Sidebar = () => {
                 </StyledUserPannelInner>
                 <StyledUserPannelInner>
                     <StyledProgressBarWrapper>
-                        <StyledProgressBar length={proteins} progress={nutrions.proteins}></StyledProgressBar>
+                        <StyledProgressBar length={proteins} progress={dailyUserProteins} ></StyledProgressBar>
                     </StyledProgressBarWrapper>
                     <StyledUserPannelRow>
                         <StyledUserText>B:</StyledUserText>
-                        <StyledUserText>{nutrions.proteins} g</StyledUserText>
+                        <StyledUserText>{dailyUserProteins} g</StyledUserText>
                     </StyledUserPannelRow>
                     <StyledUserPannelRow>
                         <StyledUserText>cel:</StyledUserText>
@@ -236,11 +252,11 @@ const Sidebar = () => {
                 </StyledUserPannelInner>
                 <StyledUserPannelInner>
                     <StyledProgressBarWrapper>
-                        <StyledProgressBar length={carbons} progress={nutrions.carbons}></StyledProgressBar>
+                        <StyledProgressBar length={carbons} progress={dailyUserCarbons}></StyledProgressBar>
                     </StyledProgressBarWrapper>
                     <StyledUserPannelRow>
                         <StyledUserText>W:</StyledUserText>
-                        <StyledUserText>{nutrions.carbons} g</StyledUserText>
+                        <StyledUserText>{dailyUserCarbons} g</StyledUserText>
                     </StyledUserPannelRow>
                     <StyledUserPannelRow>
                         <StyledUserText>cel:</StyledUserText>
@@ -249,11 +265,11 @@ const Sidebar = () => {
                 </StyledUserPannelInner>
                 <StyledUserPannelInner>
                     <StyledProgressBarWrapper>
-                        <StyledProgressBar length={fats} progress={nutrions.fats}></StyledProgressBar>
+                        <StyledProgressBar length={fats} progress={dailyUserFats}></StyledProgressBar>
                     </StyledProgressBarWrapper>
                     <StyledUserPannelRow>
                         <StyledUserText>T:</StyledUserText>
-                        <StyledUserText>{nutrions.fats} g</StyledUserText>
+                        <StyledUserText>{dailyUserFats} g</StyledUserText>
                     </StyledUserPannelRow>
                     <StyledUserPannelRow>
                         <StyledUserText>cel:</StyledUserText>

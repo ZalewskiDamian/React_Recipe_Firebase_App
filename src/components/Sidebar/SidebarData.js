@@ -2,6 +2,7 @@ import home from '../../assets/images/home.png';
 import breakfasts from '../../assets/images/breakfast.png';
 import lunch from '../../assets/images/lunch.png';
 import dinner from '../../assets/images/dinner.png';
+import calendar from '../../assets/images/calendar.png';
 
 export const sidebarData = [
     {
@@ -11,7 +12,7 @@ export const sidebarData = [
     },
     {
         title: 'Plan diety',
-        icon: home,
+        icon: calendar,
         link: '/dietplan'
     },
     {

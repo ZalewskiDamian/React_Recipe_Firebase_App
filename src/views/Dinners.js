@@ -2,7 +2,7 @@ import { db } from '../firebase.config';
 import { useState, useEffect } from 'react';
 import { collection, onSnapshot, addDoc } from 'firebase/firestore'; 
 import { useDispatch } from 'react-redux';
-import { setNutrions } from '../redux/userReducer';
+import { addRecipe } from '../redux/recipeReducer';
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/Card/Card';
 
@@ -39,12 +39,17 @@ const Dinners = () => {
         setDinners(dinnersClone)
     }
 
-    const handleNutrions = (id, kcal, proteins, carbons, fats) => {
-        const dinnersClone = [...dinners];
+    const handleRecipe = (id, title, kcal, proteins, carbons, fats) => {
+        const newRecipe = {
+            id: id,
+            title: title,
+            kcal: kcal,
+            proteins: proteins,
+            carbons: carbons,
+            fats: fats, 
+        }
 
-        dinnersClone.forEach(dinner => {
-            dinner.id === id && dispatch(setNutrions({kcal, proteins, carbons, fats}))
-        })
+        dispatch(addRecipe(newRecipe));
     }
 
     return (
@@ -66,7 +71,7 @@ const Dinners = () => {
                     steps={dinner.steps}
                     id={dinner.id}
                     handleView={handleView}
-                    handleNutrions={handleNutrions}
+                    handleRecipe={handleRecipe}
                 />
             ))}
         </GridTemplate>

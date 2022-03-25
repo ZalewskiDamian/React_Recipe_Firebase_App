@@ -6,16 +6,14 @@ const initialState = {
     activity: 1.2,
     demand: 0,
     proteins: 0,
-    fats: 0,
     carbons: 0,
+    fats: 0,
+    proteinsKcal: 0,
+    carbonsKcal: 0,
+    fatsKcal: 0,
     dietType: 'normal',
     calories: 0,
-    nutrions: {
-        kcal: 0,
-        proteins: 0,
-        carbons: 0,
-        fats: 0,
-    }
+    
 }
 
 export const userSlice = createSlice({
@@ -33,9 +31,12 @@ export const userSlice = createSlice({
         },
         setDemand: (state, action) => {
             state.demand = action.payload
-            state.proteins = (Math.round(state.weight * 1.8) * 1)
-            state.fats = (Math.round(state.weight * 1.2) * 1)
-            state.carbons = (Math.round(state.carbonsKcal / 4) * 1)
+            state.proteins = state.weight * 1.8
+            state.proteinsKcal = state.proteins * 4
+            state.fats = state.weight * 1.2
+            state.fatsKcal = state.fats * 9
+            state.carbonsKcal = state.demand - (state.proteinsKcal + state.fatsKcal)
+            state.carbons = state.carbonsKcal / 4
         },
         setDietType: (state, action) => {
             state.dietType = action.payload
@@ -48,16 +49,9 @@ export const userSlice = createSlice({
             (state.demand -= parseInt(state.calories)) :
             (state.demand += parseInt(state.calories))
         },
-        setNutrions: (state, action) => { 
-            const {kcal, proteins, fats, carbons} = action.payload;
-            state.nutrions.kcal += kcal
-            state.nutrions.proteins += proteins
-            state.nutrions.carbons += carbons
-            state.nutrions.fats += fats        
-        }
     },
 });
 
-export const { setSex, setWeight, setActivity, setDemand, setDietType, setTotalDemand, setCalories, setNutrions } = userSlice.actions
+export const { setSex, setWeight, setActivity, setDemand, setDietType, setTotalDemand, setCalories } = userSlice.actions
 
 export default userSlice.reducer

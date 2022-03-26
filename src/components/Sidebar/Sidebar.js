@@ -212,8 +212,8 @@ const Sidebar = () => {
             <StyledLinkList isActive={isActive}>
                 {sidebarData.map((item, index) => {
                     return (
-                        <StyledLinkItem key={index} onClick={() => setIsActive(false)} >
-                            <NavLink to={item.link}>
+                        <StyledLinkItem key={index}>
+                            <NavLink to={item.link} onClick={() => setIsActive(false)}>
                                 <StyledLinkInner>
                                     <StyledIcon src={item.icon} alt={item.title} />
                                     <StyledSpan>{item.title}</StyledSpan>

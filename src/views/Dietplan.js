@@ -8,6 +8,7 @@ import { device } from "../device";
 import { useSelector, useDispatch } from 'react-redux';
 import { removeRecipe } from '../redux/recipeReducer';
 import Button from '../components/Button/Button';
+import Paragraph from '../components/Paragraph/Paragraph';
 
 const StyledWrapper = styled.div`
     padding: 10rem 1rem 9rem;
@@ -45,12 +46,7 @@ const StyledCardsWrapper = styled.div`
     padding: 1.5rem;
     display: grid;
     grid-gap: 1rem;
-    grid-template-columns: minmax(350px, max-content)
-                       repeat(auto-fill, 350px) 20%;
-    /* display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-start; */
+    grid-template-columns: minmax(350px, max-content) repeat(auto-fill, 350px) 20%;
 `;
 const StyledRecipeCard = styled.div`
     width: 350px;
@@ -84,7 +80,7 @@ const StyledRecipeCardText = styled.span`
 
 
 const Dietplan = () => {
-    const [selectedDay, setSelectedDay] = useState(null);
+    const [selectedDay, setSelectedDay] = useState(new Date());
     const { recipes } = useSelector((state) => state.recipes);
     const dispatch = useDispatch();
 
@@ -105,32 +101,41 @@ const Dietplan = () => {
                     <StyledTitle>Moje posiłki:</StyledTitle>
                     <StyledDay>{selectedDay ? selectedDay.toLocaleDateString() : 'Wybierz dzień'}</StyledDay>
                 </StyledRecipesHeader>
-                <StyledCardsWrapper>
-                    {recipes.map((recipe, index) => {
-                        return (
-                            <StyledRecipeCard key={index}>
-                                <StyledRecipeCardTitle>{recipe.title}</StyledRecipeCardTitle>
-                                <StyledRecipeCardInner>
-                                    <StyledRecipeCardText>Kcal:</StyledRecipeCardText>
-                                    <StyledRecipeCardText>{recipe.kcal} kcal</StyledRecipeCardText>
-                                </StyledRecipeCardInner>
-                                <StyledRecipeCardInner>
-                                    <StyledRecipeCardText>Białka:</StyledRecipeCardText>
-                                    <StyledRecipeCardText>{recipe.proteins} g</StyledRecipeCardText>
-                                </StyledRecipeCardInner>
-                                <StyledRecipeCardInner>
-                                    <StyledRecipeCardText>Węglowodany:</StyledRecipeCardText>
-                                    <StyledRecipeCardText>{recipe.carbons} g</StyledRecipeCardText>
-                                </StyledRecipeCardInner>
-                                <StyledRecipeCardInner>
-                                    <StyledRecipeCardText>Tłuszcze:</StyledRecipeCardText>
-                                    <StyledRecipeCardText>{recipe.fats} g</StyledRecipeCardText>
-                                </StyledRecipeCardInner>
-                                <Button type='button' onClick={() => dispatch(removeRecipe(recipe.id))}>Usuń</Button>
-                            </StyledRecipeCard>
-                        )
-                    })}
-                </StyledCardsWrapper>
+                
+                    {recipes.length > 0 ? 
+                    (
+                        <StyledCardsWrapper>
+                            {recipes.map((recipe, index) => {
+                                return (
+                                    <StyledRecipeCard key={index}>
+                                        <StyledRecipeCardTitle>{recipe.title}</StyledRecipeCardTitle>
+                                        <StyledRecipeCardInner>
+                                            <StyledRecipeCardText>Kcal:</StyledRecipeCardText>
+                                            <StyledRecipeCardText>{recipe.kcal} kcal</StyledRecipeCardText>
+                                        </StyledRecipeCardInner>
+                                        <StyledRecipeCardInner>
+                                            <StyledRecipeCardText>Białka:</StyledRecipeCardText>
+                                            <StyledRecipeCardText>{recipe.proteins} g</StyledRecipeCardText>
+                                        </StyledRecipeCardInner>
+                                        <StyledRecipeCardInner>
+                                            <StyledRecipeCardText>Węglowodany:</StyledRecipeCardText>
+                                            <StyledRecipeCardText>{recipe.carbons} g</StyledRecipeCardText>
+                                        </StyledRecipeCardInner>
+                                        <StyledRecipeCardInner>
+                                            <StyledRecipeCardText>Tłuszcze:</StyledRecipeCardText>
+                                            <StyledRecipeCardText>{recipe.fats} g</StyledRecipeCardText>
+                                        </StyledRecipeCardInner>
+                                        <Button type='button' onClick={() => dispatch(removeRecipe(recipe.id))}>Usuń</Button>
+                                    </StyledRecipeCard>
+                                )
+                            })}
+                        </StyledCardsWrapper>
+                    ) : 
+                    (
+                        <Paragraph marginTop>Brak wybranych przepisów</Paragraph>
+                    )
+                    }
+                    
             </StyledRecipesWrapper>
         </StyledWrapper>
     )

@@ -1,7 +1,8 @@
 import { db } from '../firebase.config';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { collection, onSnapshot, addDoc } from 'firebase/firestore'; 
+import { collection, onSnapshot, addDoc } from 'firebase/firestore';
+import { addRecipe } from '../redux/recipeReducer'; 
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/Card/Card';
 
@@ -38,13 +39,18 @@ const Lunchs = () => {
         setLunches(lunchesClone)
     }
 
-    // const handleNutrions = (id, title, kcal, proteins, carbons, fats) => {
-    //     const lunchesClone = [...lunches];
+    const handleRecipe = (id, title, kcal, proteins, carbons, fats) => {
+        const newRecipe = {
+            id: id,
+            title: title,
+            kcal: kcal,
+            proteins: proteins,
+            carbons: carbons,
+            fats: fats, 
+        }
 
-    //     lunchesClone.forEach(lunch => {
-    //         lunch.id === id && dispatch(selectRecipe({id, title, kcal, proteins, carbons, fats}))
-    //     })
-    // }
+        dispatch(addRecipe(newRecipe));
+    }
 
     return (
         <GridTemplate>
@@ -65,6 +71,7 @@ const Lunchs = () => {
                     steps={lunch.steps}
                     id={lunch.id}
                     handleView={handleView}
+                    handleRecipe={handleRecipe}
                 />
             ))}
         </GridTemplate>

@@ -88,7 +88,7 @@ const StyledIcon = styled.img`
     width: 1.8rem;
 `;
 
-const Card = ({title, time, desc, proteins, carbons, fats, weight, kcal, viewing, image, ingredients, steps, id, handleView, handleNutrions, handleRecipe}) => {
+const Card = ({title, time, desc, proteins, carbons, fats, weight, kcal, viewing, image, ingredients, steps, id, handleView, handleRecipe}) => {
     return (
         <StyledCardWrapper>
             <StyledCardImageWrapper>

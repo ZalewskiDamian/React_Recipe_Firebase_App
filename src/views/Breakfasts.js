@@ -1,6 +1,6 @@
-// import { db } from '../firebase.config';
+import { db } from '../firebase.config';
 import { useState, useEffect } from 'react';
-// import { collection, getDocs, onSnapshot, addDoc } from 'firebase/firestore'; 
+import { collection, getDocs, onSnapshot, addDoc } from 'firebase/firestore'; 
 import Popup from '../components/Popup/Popup';
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/Card/Card';
@@ -19,33 +19,33 @@ const Breakfasts = () => {
     // });
     // const [popupActive, setPopupActive] = useState(false);
 
-    // const breakfastsCollectionRef = collection(db, "breakfasts");
+    const breakfastsCollectionRef = collection(db, "breakfasts");
 
     useEffect(() => {
-        // onSnapshot(breakfastsCollectionRef, snapshot => {
-        //     setBreakfasts(snapshot.docs.map(doc => {
-        //         return {
-        //             id: doc.id,
-        //             viewing: false,
-        //             ...doc.data()
-        //         }
-        //     }))
-        // })
+        onSnapshot(breakfastsCollectionRef, snapshot => {
+            setBreakfasts(snapshot.docs.map(doc => {
+                return {
+                    id: doc.id,
+                    viewing: false,
+                    ...doc.data()
+                }
+            }))
+        })
     },[]);
 
-    // const handleView = id => {
-    //     const breakfastsClone = [...breakfasts];
+    const handleView = id => {
+        const breakfastsClone = [...breakfasts];
 
-    //     breakfastsClone.forEach(breakfast => {
-    //         if (breakfast.id === id) {
-    //             breakfast.viewing = !breakfast.viewing
-    //         } else {
-    //             breakfast.viewing = false
-    //         }
-    //     })
+        breakfastsClone.forEach(breakfast => {
+            if (breakfast.id === id) {
+                breakfast.viewing = !breakfast.viewing
+            } else {
+                breakfast.viewing = false
+            }
+        })
 
-    //     setBreakfasts(breakfastsClone)
-    // }
+        setBreakfasts(breakfastsClone)
+    }
 
     const handleRecipe = (id, title, kcal, proteins, carbons, fats) => {
         const newRecipe = {
@@ -148,7 +148,7 @@ const Breakfasts = () => {
                     ingredients={breakfast.ingredients}
                     steps={breakfast.steps}
                     id={breakfast.id}
-                    // handleView={handleView}
+                    handleView={handleView}
                     handleRecipe={handleRecipe}
                 />
             ))}

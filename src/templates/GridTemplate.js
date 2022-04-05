@@ -11,8 +11,10 @@ const StyledWrapper = styled.div`
 `;
 const StyledGrid = styled.div`
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 85px;
+    grid-template-columns: repeat(auto-fill, 420px);
+    grid-gap: 30px 85px;
+    justify-content: center;
+    align-items: flex-start;
 
     @media (max-width: 1500px) {
         grid-gap: 45px;

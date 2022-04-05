@@ -1,7 +1,7 @@
-// import { db } from '../firebase.config';
+import { db } from '../firebase.config';
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-// import { collection, onSnapshot, addDoc } from 'firebase/firestore';
+import { collection, onSnapshot, addDoc } from 'firebase/firestore';
 import { addRecipe } from '../redux/recipeReducer'; 
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/Card/Card';
@@ -10,34 +10,34 @@ const Lunchs = () => {
     console.log('lunches');
     const [lunches, setLunches] = useState([]);
 
-    // const lunchesCollectionRef = collection(db, "lunches");
+    const lunchesCollectionRef = collection(db, "lunches");
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // onSnapshot(lunchesCollectionRef, snapshot => {
-        //     setLunches(snapshot.docs.map(doc => {
-        //         return {
-        //             id: doc.id,
-        //             viewing: false,
-        //             ...doc.data()
-        //         }
-        //     }))
-        // })
+        onSnapshot(lunchesCollectionRef, snapshot => {
+            setLunches(snapshot.docs.map(doc => {
+                return {
+                    id: doc.id,
+                    viewing: false,
+                    ...doc.data()
+                }
+            }))
+        })
     },[]);
 
-    // const handleView = id => {
-    //     const lunchesClone = [...lunches];
+    const handleView = id => {
+        const lunchesClone = [...lunches];
 
-    //     lunchesClone.forEach(lunch => {
-    //         if (lunch.id === id) {
-    //             lunch.viewing = !lunch.viewing
-    //         } else {
-    //             lunch.viewing = false
-    //         }
-    //     })
+        lunchesClone.forEach(lunch => {
+            if (lunch.id === id) {
+                lunch.viewing = !lunch.viewing
+            } else {
+                lunch.viewing = false
+            }
+        })
 
-    //     setLunches(lunchesClone)
-    // }
+        setLunches(lunchesClone)
+    }
 
     const handleRecipe = (id, title, kcal, proteins, carbons, fats) => {
         const newRecipe = {
@@ -70,7 +70,7 @@ const Lunchs = () => {
                     ingredients={lunch.ingredients}
                     steps={lunch.steps}
                     id={lunch.id}
-                    // handleView={handleView}
+                    handleView={handleView}
                     handleRecipe={handleRecipe}
                 />
             ))}

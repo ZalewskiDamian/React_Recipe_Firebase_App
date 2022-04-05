@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/React_Recipe_Firebase_App/static/css/main.09d641ff.css",
-    "main.js": "/React_Recipe_Firebase_App/static/js/main.5430f93d.js",
+    "main.js": "/React_Recipe_Firebase_App/static/js/main.89ee6f3d.js",
     "static/media/lunch.png": "/React_Recipe_Firebase_App/static/media/lunch.00845eeec2d56dec71df.png",
     "static/media/dinner.png": "/React_Recipe_Firebase_App/static/media/dinner.eccee35bb2c68f329f53.png",
     "static/media/breakfast.png": "/React_Recipe_Firebase_App/static/media/breakfast.2293cde0a0b03bde0465.png",
@@ -11,10 +11,10 @@
     "static/media/close.png": "/React_Recipe_Firebase_App/static/media/close.1de6087b0e17f7af7a90.png",
     "index.html": "/React_Recipe_Firebase_App/index.html",
     "main.09d641ff.css.map": "/React_Recipe_Firebase_App/static/css/main.09d641ff.css.map",
-    "main.5430f93d.js.map": "/React_Recipe_Firebase_App/static/js/main.5430f93d.js.map"
+    "main.89ee6f3d.js.map": "/React_Recipe_Firebase_App/static/js/main.89ee6f3d.js.map"
   },
   "entrypoints": [
     "static/css/main.09d641ff.css",
-    "static/js/main.5430f93d.js"
+    "static/js/main.89ee6f3d.js"
   ]
 }

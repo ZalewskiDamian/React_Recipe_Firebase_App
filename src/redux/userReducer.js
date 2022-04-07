@@ -31,12 +31,12 @@ export const userSlice = createSlice({
         },
         setDemand: (state, action) => {
             state.demand = action.payload
-            state.proteins = state.weight * 1.8
+            state.proteins = Math.round(state.weight * 1.8) * 1;
             state.proteinsKcal = state.proteins * 4
-            state.fats = state.weight * 1.2
+            state.fats = Math.round(state.weight * 1.2) * 1;
             state.fatsKcal = state.fats * 9
             state.carbonsKcal = state.demand - (state.proteinsKcal + state.fatsKcal)
-            state.carbons = state.carbonsKcal / 4
+            state.carbons = Math.round(state.carbonsKcal / 4) * 1;
         },
         setDietType: (state, action) => {
             state.dietType = action.payload

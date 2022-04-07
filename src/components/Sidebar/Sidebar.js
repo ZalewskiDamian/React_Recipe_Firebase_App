@@ -197,7 +197,7 @@ const Sidebar = () => {
             dailyUserProteins += recip.proteins;
             dailyUserCarbons += recip.carbons;
             dailyUserFats += recip.fats;
-        })
+        });
     }
     
     return ( 

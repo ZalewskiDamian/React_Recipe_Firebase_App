@@ -1,7 +1,7 @@
 import { db } from '../firebase.config';
 import { useState, useEffect } from 'react';
-import { collection, getDocs, onSnapshot, addDoc } from 'firebase/firestore'; 
-import Popup from '../components/Popup/Popup';
+import { collection, onSnapshot, addDoc } from 'firebase/firestore'; 
+// import Popup from '../components/Popup/Popup';
 import GridTemplate from '../templates/GridTemplate';
 import Card from '../components/Card/Card';
 import { useDispatch } from 'react-redux';

@@ -46,7 +46,9 @@ const StyledCardsWrapper = styled.div`
     padding: 1.5rem;
     display: grid;
     grid-gap: 1rem;
-    grid-template-columns: minmax(350px, max-content) repeat(auto-fill, 350px) 20%;
+    grid-template-columns: repeat(auto-fill, 350px);
+    justify-content: center;
+    align-items: flex-start;
 `;
 const StyledRecipeCard = styled.div`
     width: 350px;

@@ -63,7 +63,7 @@ const StyledRecipeCardTitle = styled.p`
     margin: 0 0 1rem 0;
 `;
 const StyledRecipeCardInner = styled.div`
-    border-radius: 2.5rem;
+    border-radius: 1.5rem;
     background-color: ${({theme}) => theme.colors.gray};
     padding: .7rem 1.2rem;
     margin-bottom: 1rem;
